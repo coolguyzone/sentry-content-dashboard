@@ -1,130 +1,179 @@
-# Sentry Content Aggregator
+# Sentry Content Terminal 🎮
 
-A Next.js web application that aggregates and displays content from the Sentry blog and YouTube channel from the last 90 days. The app provides a beautiful, modern interface to browse through recent Sentry content with direct links to the original sources.
+A retro 8-bit video game styled content aggregator that brings together the latest content from Sentry's blog, YouTube channel, and documentation.
 
-## Features
+## ✨ Features
 
-- 📝 **Blog Posts**: Fetches recent blog posts from [Sentry's blog](https://blog.sentry.io/)
-- 🎥 **YouTube Videos**: Displays recent videos from Sentry's YouTube channel
-- 📊 **Content Overview**: Shows statistics and counts for different content types
-- 🔍 **Smart Filtering**: Automatically filters content to show only items from the last 90 days
-- 📱 **Responsive Design**: Modern, mobile-friendly interface built with Tailwind CSS
-- ⚡ **Real-time Updates**: Content is fetched fresh on each page load
+- **🎥 YouTube Integration** - Real-time videos from Sentry's official channel
+- **📝 Blog Aggregation** - Latest posts from blog.sentry.io
+- **📚 Documentation Monitoring** - New pages from docs.sentry.io
+- **🎮 Retro Gaming UI** - 8-bit pixel art aesthetic with neon colors
+- **🔍 Content Filtering** - Filter by source type (All, Blog, YouTube, Docs)
+- **📱 Responsive Design** - Works on all devices
+- **⚡ Real-time Updates** - Fresh content every time you visit
 
-## Screenshots
-
-The application features a dark theme with:
-- Header with Sentry branding and last updated timestamp
-- Statistics cards showing content counts
-- Content cards with source indicators, titles, descriptions, and direct links
-- Hover effects and smooth transitions
-
-## Tech Stack
-
-- **Framework**: Next.js 14 with App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **HTTP Client**: Axios
-- **Date Handling**: date-fns
-- **Deployment**: Ready for Vercel deployment
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 
 - Node.js 18+ 
 - npm or yarn
+- YouTube Data API v3 key
 
 ### Installation
 
-1. Clone the repository:
-```bash
-git clone <your-repo-url>
-cd sentry-content-aggregator
-```
-
-2. Install dependencies:
-```bash
-npm install
-```
-
-3. Run the development server:
-```bash
-npm run dev
-```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## API Integration
-
-### Blog Posts
-
-The app currently fetches blog posts from Sentry's RSS feed at `https://blog.sentry.io/feed.xml`. This is implemented in `/api/blog/route.ts`.
-
-### YouTube Videos
-
-The YouTube integration currently uses mock data for demonstration purposes. To integrate with the real YouTube Data API v3:
-
-1. **Get a YouTube Data API Key**:
-   - Go to [Google Cloud Console](https://console.cloud.google.com/)
-   - Create a new project or select an existing one
-   - Enable the YouTube Data API v3
-   - Create credentials (API Key)
-
-2. **Set up Environment Variables**:
-   Create a `.env.local` file:
-   ```env
-   YOUTUBE_API_KEY=your_api_key_here
+1. **Clone the repository**
+   ```bash
+   git clone <your-repo-url>
+   cd sentry-content-aggregator
    ```
 
-3. **Update the YouTube API Route**:
-   Replace the mock data function in `/api/youtube/route.ts` with the commented real API implementation.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-4. **Rate Limiting**:
-   The YouTube Data API has quotas. Consider implementing caching to avoid hitting limits.
+3. **Set up environment variables**
+   ```bash
+   cp config.example.ts config.ts
+   # Edit config.ts with your YouTube API key
+   ```
 
-## Production Deployment
+4. **Create .env.local**
+   ```bash
+   echo "YOUTUBE_API_KEY=your_actual_api_key_here" > .env.local
+   ```
 
-### Environment Variables
+5. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-For production, you may want to set:
-```env
-NEXT_PUBLIC_APP_URL=https://your-domain.com
-YOUTUBE_API_KEY=your_production_api_key
+6. **Open your browser** to `http://localhost:3000`
+
+## 🔧 Configuration
+
+### YouTube API Setup
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing one
+3. Enable YouTube Data API v3
+4. Create credentials (API Key)
+5. Add the API key to your `.env.local` file
+
+### Content Sources
+
+- **Blog**: Automatically fetches from `https://blog.sentry.io/feed.xml`
+- **YouTube**: Uses your API key to fetch from Sentry's official channel
+- **Documentation**: Monitors `https://docs.sentry.io` for new pages
+
+## 📊 Docs Monitoring Cron Job
+
+The app includes an automated system to monitor Sentry's documentation for new pages.
+
+### How It Works
+
+1. **Daily Monitoring**: Runs automatically every day at 2 AM UTC via GitHub Actions
+2. **Sitemap Crawling**: Checks `https://docs.sentry.io/sitemap.xml` for new pages
+3. **Content Discovery**: Automatically discovers and indexes new documentation
+4. **Smart Filtering**: Only shows documentation from the last 90 days
+
+### Manual Monitoring
+
+You can run the monitoring script manually:
+
+```bash
+npm run monitor-docs
 ```
 
-### Caching
+This will:
+- Fetch the current docs sitemap
+- Compare with previously known pages
+- Download and parse new pages
+- Update the local storage
 
-Consider implementing caching strategies:
-- Cache RSS feed responses (blog posts don't change frequently)
-- Cache YouTube API responses with appropriate TTL
-- Use Next.js built-in caching mechanisms
+### GitHub Actions Setup
 
-### Monitoring
+The cron job is configured in `.github/workflows/monitor-docs.yml` and will:
 
-- Monitor API rate limits
-- Set up error tracking (ironically, you could use Sentry!)
-- Monitor performance metrics
+- Run automatically every day
+- Use your repository's secrets for API keys
+- Commit and push new content discoveries
+- Keep your aggregator up-to-date
 
-## Customization
+### Required Secrets
 
-### Adding New Content Sources
+Add these to your GitHub repository secrets:
 
-To add new content sources:
+- `YOUTUBE_API_KEY`: Your YouTube Data API v3 key
 
-1. Create a new API route in `/api/[source]/route.ts`
-2. Update the main page component to fetch from the new source
-3. Add the new source type to the `ContentItem` interface
-4. Update the UI to display the new content type
+## 🎨 Customization
+
+### Retro Gaming Theme
+
+The app uses a custom 8-bit video game aesthetic:
+
+- **Fonts**: Press Start 2P (headings), VT323 (body text)
+- **Colors**: Neon green, blue, red, cyan, and yellow
+- **Effects**: Pixel borders, glowing text, scanning animations
+- **Layout**: Card-based grid with hover effects
 
 ### Styling
 
-The app uses Tailwind CSS with a custom color scheme. You can customize:
-- Colors in `tailwind.config.js`
-- Component styles in the page components
-- Global styles in `globals.css`
+All custom styles are in `src/app/globals.css`:
 
-## Contributing
+- `.pixel-border` - Pixel art borders
+- `.retro-button` - Gaming-style buttons
+- `.pixel-text` - Text with pixel shadows
+- `.retro-scanner` - Loading animations
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. **Push to GitHub**
+2. **Connect to Vercel** at [vercel.com](https://vercel.com)
+3. **Import your repository**
+4. **Add environment variables**:
+   - `YOUTUBE_API_KEY`: Your YouTube API key
+5. **Deploy** - Vercel will auto-detect Next.js
+
+### Environment Variables for Production
+
+- `YOUTUBE_API_KEY`: Required for YouTube integration
+- `NEXT_PUBLIC_APP_URL`: Your app's public URL
+
+## 📁 Project Structure
+
+```
+sentry-content-aggregator/
+├── src/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── blog/          # Blog RSS feed API
+│   │   │   ├── youtube/       # YouTube API integration
+│   │   │   └── docs/          # Documentation API
+│   │   ├── globals.css        # Retro gaming styles
+│   │   ├── layout.tsx         # App layout
+│   │   └── page.tsx           # Main content page
+│   └── ...
+├── scripts/
+│   └── monitor-docs.js        # Docs monitoring script
+├── .github/
+│   └── workflows/
+│       └── monitor-docs.yml   # GitHub Actions cron job
+├── data/
+│   └── docs-pages.json        # Discovered docs storage
+└── config.ts                  # App configuration
+```
+
+## 🔍 API Endpoints
+
+- `GET /api/blog` - Blog posts from RSS feed
+- `GET /api/youtube` - YouTube videos from Sentry channel
+- `GET /api/docs` - Documentation pages discovered by monitoring
+
+## 🤝 Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -132,23 +181,17 @@ The app uses Tailwind CSS with a custom color scheme. You can customize:
 4. Test thoroughly
 5. Submit a pull request
 
-## License
+## 📝 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## Acknowledgments
+## 🙏 Acknowledgments
 
-- [Sentry](https://sentry.io/) for providing excellent monitoring tools and content
-- [Next.js](https://nextjs.org/) for the amazing React framework
-- [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-
-## Support
-
-If you encounter any issues or have questions:
-1. Check the [Issues](https://github.com/your-repo/issues) page
-2. Create a new issue with detailed information
-3. Include your environment details and error messages
+- **Sentry** for the amazing monitoring platform and content
+- **Next.js** for the powerful React framework
+- **Tailwind CSS** for the utility-first styling
+- **Google** for the YouTube Data API
 
 ---
 
-Built with ❤️ for the Sentry community
+**Ready to monitor Sentry content like it's 1989! 🕹️✨**
