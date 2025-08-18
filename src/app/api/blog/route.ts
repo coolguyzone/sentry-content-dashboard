@@ -13,19 +13,30 @@ interface BlogPost {
 
 export async function GET() {
   try {
+    console.log('Blog API request received');
+    console.log('Environment check:', {
+      NODE_ENV: process.env.NODE_ENV,
+      VERCEL_ENV: process.env.VERCEL_ENV,
+    });
+    
     // Sentry blog RSS feed URL
     const rssUrl = 'https://blog.sentry.io/feed.xml';
+    
+    console.log('Fetching RSS feed from:', rssUrl);
     
     // Fetch the RSS feed
     const response = await fetch(rssUrl);
     if (!response.ok) {
-      throw new Error(`Failed to fetch RSS feed: ${response.status}`);
+      console.error('RSS feed fetch failed:', response.status, response.statusText);
+      throw new Error(`Failed to fetch RSS feed: ${response.status} ${response.statusText}`);
     }
     
     const xmlText = await response.text();
+    console.log('RSS feed fetched successfully, length:', xmlText.length);
     
     // Parse the XML to extract blog posts
     const posts = parseRSSFeed(xmlText);
+    console.log('Parsed posts count:', posts.length);
     
     // Filter posts from the last 90 days
     const ninetyDaysAgo = subDays(new Date(), 90);
@@ -34,11 +45,20 @@ export async function GET() {
       return postDate >= ninetyDaysAgo;
     });
     
+    console.log('Recent posts count:', recentPosts.length);
     return NextResponse.json(recentPosts);
   } catch (error) {
     console.error('Error fetching blog posts:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch blog posts' },
+      { 
+        error: 'Failed to fetch blog posts',
+        details: error instanceof Error ? error.message : 'Unknown error',
+        debug: {
+          nodeEnv: process.env.NODE_ENV,
+          vercelEnv: process.env.VERCEL_ENV,
+          timestamp: new Date().toISOString()
+        }
+      },
       { status: 500 }
     );
   }

@@ -1,8 +1,23 @@
+/* Import retro fonts - must be first */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --pixel-green: #00ff00;
+  --pixel-blue: #0080ff;
+  --pixel-red: #ff0000;
+  --pixel-yellow: #ffff00;
+  --pixel-purple: #8000ff;
+  --pixel-cyan: #00ffff;
+  --pixel-orange: #ff8000;
+  --pixel-pink: #ff0080;
+  --retro-bg: #1a1a2e;
+  --retro-card: #16213e;
+  --retro-border: #0f3460;
+  --retro-accent: #e94560;
 }
 
 @theme inline {
@@ -12,15 +27,131 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Retro pixel art styles */
+.pixel-border {
+  border: 2px solid var(--pixel-green);
+  box-shadow: 
+    0 0 0 2px var(--retro-bg),
+    0 0 0 4px var(--pixel-green),
+    0 0 0 6px var(--retro-bg),
+    0 0 0 8px var(--pixel-green);
+}
+
+.pixel-border-red {
+  border: 2px solid var(--pixel-red);
+  box-shadow: 
+    0 0 0 2px var(--retro-bg),
+    0 0 0 4px var(--pixel-red),
+    0 0 0 6px var(--retro-bg),
+    0 0 0 8px var(--pixel-red);
+}
+
+.pixel-border-blue {
+  border: 2px solid var(--pixel-blue);
+  box-shadow: 
+    0 0 0 2px var(--retro-bg),
+    0 0 0 4px var(--pixel-blue),
+    0 0 0 6px var(--retro-bg),
+    0 0 0 8px var(--pixel-blue);
+}
+
+.pixel-text {
+  text-shadow: 
+    2px 2px 0px var(--retro-bg),
+    4px 4px 0px var(--pixel-green);
+}
+
+.pixel-text-red {
+  text-shadow: 
+    2px 2px 0px var(--retro-bg),
+    4px 4px 0px var(--pixel-red);
+}
+
+.pixel-text-blue {
+  text-shadow: 
+    2px 2px 0px var(--retro-bg),
+    4px 4px 0px var(--pixel-blue);
+}
+
+.pixel-bg {
+  background: 
+    linear-gradient(45deg, var(--retro-bg) 25%, transparent 25%),
+    linear-gradient(-45deg, var(--retro-bg) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, var(--retro-bg) 75%),
+    linear-gradient(-45deg, transparent 75%, var(--retro-bg) 75%);
+  background-size: 20px 20px;
+  background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.retro-scanner {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 0, 0.2),
+    transparent
+  );
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.pixel-glow {
+  animation: pixel-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes pixel-glow {
+  from { filter: drop-shadow(0 0 5px var(--pixel-green)); }
+  to { filter: drop-shadow(0 0 20px var(--pixel-green)); }
+}
+
+.retro-button {
+  background: var(--retro-card);
+  border: 2px solid var(--pixel-green);
+  color: var(--pixel-green);
+  text-shadow: 2px 2px 0px var(--retro-bg);
+  transition: all 0.1s ease;
+}
+
+.retro-button:hover {
+  background: var(--pixel-green);
+  color: var(--retro-bg);
+  text-shadow: none;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 var(--retro-bg);
+}
+
+.retro-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 0 var(--retro-bg);
 }
 
 body {
-  background: var(--background);
+  background: var(--retro-bg);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'VT323', monospace;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--retro-bg);
+  border: 2px solid var(--pixel-green);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pixel-green);
+  border: 2px solid var(--retro-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--pixel-cyan);
 }

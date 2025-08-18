@@ -20,6 +20,7 @@ export default function Home() {
   const [content, setContent] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube'>('all');
 
   useEffect(() => {
     fetchContent();
@@ -61,14 +62,30 @@ export default function Home() {
     return { blogCount, youtubeCount, totalCount };
   };
 
+  const getFilteredContent = () => {
+    if (selectedFilter === 'all') return content;
+    return content.filter(item => item.source === selectedFilter);
+  };
+
   const stats = getContentStats();
+  const filteredContent = getFilteredContent();
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
+      <div className="min-h-screen pixel-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-slate-300 text-lg">Loading Sentry content...</p>
+          <div className="retro-scanner w-32 h-32 mx-auto mb-8 rounded-full"></div>
+          <div className="pixel-text text-4xl font-bold text-green-400 mb-4 font-['Press_Start_2P']">
+            LOADING...
+          </div>
+          <div className="text-cyan-400 text-xl font-['VT323']">
+            Fetching Sentry content from the matrix...
+          </div>
+          <div className="mt-8 flex space-x-2 justify-center">
+            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+            <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-3 h-3 bg-red-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+          </div>
         </div>
       </div>
     );
@@ -76,16 +93,18 @@ export default function Home() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 flex items-center justify-center">
+      <div className="min-h-screen pixel-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-400 text-6xl mb-4">⚠️</div>
-          <h1 className="text-2xl font-bold text-white mb-4">Error Loading Content</h1>
-          <p className="text-slate-300 mb-6">{error}</p>
+          <div className="text-red-400 text-8xl mb-6">⚠️</div>
+          <h1 className="pixel-text-red text-3xl font-bold mb-6 font-['Press_Start_2P']">
+            SYSTEM ERROR
+          </h1>
+          <p className="text-red-300 mb-8 text-xl font-['VT323']">{error}</p>
           <button 
             onClick={fetchContent}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="retro-button px-8 py-4 text-xl font-['Press_Start_2P']"
           >
-            Try Again
+            RETRY CONNECTION
           </button>
         </div>
       </div>
@@ -93,55 +112,101 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+    <div className="min-h-screen pixel-bg">
       {/* Header */}
-      <header className="bg-slate-800/50 backdrop-blur-sm border-b border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-white">Sentry Content Aggregator</h1>
-              <p className="text-slate-300 mt-1">Latest content from the last 90 days</p>
-            </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold text-blue-400">{stats.totalCount}</div>
-              <div className="text-sm text-slate-400">Total Items</div>
+      <header className="pixel-border bg-retro-card/80 backdrop-blur-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center">
+            <h1 className="pixel-text text-5xl font-bold text-green-400 mb-4 font-['Press_Start_2P']">
+              SENTRY CONTENT TERMINAL
+            </h1>
+            <p className="text-cyan-400 text-xl font-['VT323'] mb-6">
+              Accessing latest content from the last 90 days...
+            </p>
+            <div className="flex justify-center space-x-8">
+              <div className="text-center">
+                <div className="pixel-text text-4xl font-bold text-green-400 font-['Press_Start_2P']">{stats.totalCount}</div>
+                <div className="text-sm text-cyan-400 font-['VT323']">TOTAL ITEMS</div>
+              </div>
+              <div className="text-center">
+                <div className="pixel-text-blue text-4xl font-bold text-blue-400 font-['Press_Start_2P']">{stats.blogCount}</div>
+                <div className="text-sm text-cyan-400 font-['VT323']">BLOG POSTS</div>
+              </div>
+              <div className="text-center">
+                <div className="pixel-text-red text-4xl font-bold text-red-400 font-['Press_Start_2P']">{stats.youtubeCount}</div>
+                <div className="text-sm text-cyan-400 font-['VT323']">VIDEOS</div>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Stats Bar */}
-      <div className="bg-slate-800/30 border-b border-slate-700">
+      {/* Filter Controls */}
+      <div className="bg-retro-card/50 border-b-2 border-green-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex space-x-8">
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <span className="text-slate-300">{stats.blogCount} Blog Posts</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <span className="text-slate-300">{stats.youtubeCount} YouTube Videos</span>
-            </div>
+          <div className="flex justify-center space-x-4">
+            <button
+              onClick={() => setSelectedFilter('all')}
+              className={`retro-button px-6 py-3 font-['Press_Start_2P'] text-sm ${
+                selectedFilter === 'all' ? 'bg-green-400 text-retro-bg' : ''
+              }`}
+            >
+              ALL CONTENT
+            </button>
+            <button
+              onClick={() => setSelectedFilter('blog')}
+              className={`retro-button px-6 py-3 font-['Press_Start_2P'] text-sm ${
+                selectedFilter === 'blog' ? 'bg-blue-400 text-retro-bg' : ''
+              }`}
+            >
+              BLOG POSTS
+            </button>
+            <button
+              onClick={() => setSelectedFilter('youtube')}
+              className={`retro-button px-6 py-3 font-['Press_Start_2P'] text-sm ${
+                selectedFilter === 'youtube' ? 'bg-red-400 text-retro-bg' : ''
+              }`}
+            >
+              YOUTUBE VIDEOS
+            </button>
           </div>
         </div>
       </div>
 
       {/* Content Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {content.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="text-slate-400 text-6xl mb-4">📭</div>
-            <h2 className="text-xl font-semibold text-white mb-2">No Content Found</h2>
-            <p className="text-slate-400">No content was published in the last 90 days.</p>
+        {filteredContent.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="text-cyan-400 text-8xl mb-6">📭</div>
+            <h2 className="pixel-text text-2xl font-bold text-green-400 mb-4 font-['Press_Start_2P']">
+              NO CONTENT DETECTED
+            </h2>
+            <p className="text-cyan-400 text-xl font-['VT323']">
+              No content was published in the last 90 days.
+            </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {content.map((item) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredContent.map((item) => (
               <ContentCard key={item.id} item={item} />
             ))}
           </div>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="pixel-border bg-retro-card/50 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center">
+          <p className="text-cyan-400 font-['VT323'] text-lg">
+            SENTRY CONTENT TERMINAL v1.0 - Ready for deployment
+          </p>
+          <div className="mt-4 flex justify-center space-x-4">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
@@ -151,7 +216,9 @@ function ContentCard({ item }: { item: ContentItem }) {
   const publishedDate = format(new Date(item.publishedAt), 'MMM d, yyyy');
   
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-lg border border-slate-700 hover:border-slate-600 transition-all duration-200 hover:shadow-lg hover:shadow-slate-900/20">
+    <div className={`bg-retro-card backdrop-blur-sm rounded-lg transition-all duration-300 hover:scale-105 ${
+      isYouTube ? 'pixel-border-red' : 'pixel-border-blue'
+    }`}>
       {/* Thumbnail */}
       {isYouTube && item.thumbnail && (
         <div className="relative">
@@ -161,42 +228,49 @@ function ContentCard({ item }: { item: ContentItem }) {
             className="w-full h-48 object-cover rounded-t-lg"
           />
           {item.duration && (
-            <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 rounded">
+            <div className="absolute bottom-2 right-2 bg-black/90 text-white text-xs px-2 py-1 rounded font-['VT323']">
               {item.duration}
             </div>
           )}
+          <div className="absolute top-2 left-2">
+            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded font-['VT323']">
+              🎥 VIDEO
+            </span>
+          </div>
         </div>
       )}
       
       {/* Content */}
       <div className="p-6">
         {/* Source Badge */}
-        <div className="flex items-center justify-between mb-3">
-          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+        <div className="flex items-center justify-between mb-4">
+          <span className={`inline-flex items-center px-3 py-1 rounded font-['VT323'] text-sm font-bold ${
             isYouTube 
-              ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' 
-              : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+              ? 'bg-red-900 text-red-200 border-2 border-red-400' 
+              : 'bg-blue-900 text-blue-200 border-2 border-blue-400'
           }`}>
-            {isYouTube ? '🎥 YouTube' : '📝 Blog'}
+            {isYouTube ? '🎥 YOUTUBE' : '📝 BLOG'}
           </span>
-          <span className="text-xs text-slate-400">{publishedDate}</span>
+          <span className="text-xs text-cyan-400 font-['VT323']">{publishedDate}</span>
         </div>
         
         {/* Title */}
-        <h3 className="text-lg font-semibold text-white mb-2 line-clamp-2">
+        <h3 className={`text-lg font-bold mb-3 line-clamp-2 font-['VT323'] ${
+          isYouTube ? 'text-red-200' : 'text-blue-200'
+        }`}>
           {item.title}
         </h3>
         
         {/* Description */}
         {item.description && (
-          <p className="text-slate-300 text-sm mb-4 line-clamp-3">
+          <p className="text-cyan-300 text-sm mb-4 line-clamp-3 font-['VT323']">
             {item.description}
           </p>
         )}
         
         {/* Author */}
         {item.author && (
-          <p className="text-xs text-slate-400 mb-4">By {item.author}</p>
+          <p className="text-xs text-cyan-400 mb-4 font-['VT323']">By {item.author}</p>
         )}
         
         {/* Link */}
@@ -204,13 +278,13 @@ function ContentCard({ item }: { item: ContentItem }) {
           href={item.url}
           target="_blank"
           rel="noopener noreferrer"
-          className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          className={`retro-button inline-flex items-center px-6 py-3 rounded-lg text-sm font-bold font-['Press_Start_2P'] transition-all duration-200 ${
             isYouTube
-              ? 'bg-red-600 hover:bg-red-700 text-white'
-              : 'bg-blue-600 hover:bg-blue-700 text-white'
+              ? 'border-red-400 text-red-400 hover:bg-red-400 hover:text-retro-bg'
+              : 'border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-retro-bg'
           }`}
         >
-          {isYouTube ? 'Watch Video' : 'Read Post'}
+          {isYouTube ? 'WATCH VIDEO' : 'READ POST'}
           <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>

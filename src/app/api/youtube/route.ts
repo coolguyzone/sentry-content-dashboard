@@ -33,6 +33,15 @@ interface YouTubeAPIResponse {
 
 export async function GET() {
   try {
+    // Add request logging for debugging
+    console.log('YouTube API request received');
+    console.log('Environment check:', {
+      NODE_ENV: process.env.NODE_ENV,
+      VERCEL_ENV: process.env.VERCEL_ENV,
+      hasApiKey: !!process.env.YOUTUBE_API_KEY,
+      configApiKey: !!config.youtube.apiKey,
+    });
+    
     console.log('YouTube API key configured:', !!config.youtube.apiKey);
     console.log('YouTube channel ID:', config.youtube.channelId);
     
@@ -40,7 +49,14 @@ export async function GET() {
     if (!config.youtube.apiKey) {
       console.error('YouTube API key not configured');
       return NextResponse.json(
-        { error: 'YouTube API key not configured' },
+        { 
+          error: 'YouTube API key not configured',
+          debug: {
+            envVar: !!process.env.YOUTUBE_API_KEY,
+            configValue: !!config.youtube.apiKey,
+            nodeEnv: process.env.NODE_ENV
+          }
+        },
         { status: 500 }
       );
     }
@@ -90,7 +106,15 @@ export async function GET() {
   } catch (error) {
     console.error('Error fetching YouTube videos:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch YouTube videos', details: error instanceof Error ? error.message : 'Unknown error' },
+      { 
+        error: 'Failed to fetch YouTube videos', 
+        details: error instanceof Error ? error.message : 'Unknown error',
+        debug: {
+          nodeEnv: process.env.NODE_ENV,
+          vercelEnv: process.env.VERCEL_ENV,
+          timestamp: new Date().toISOString()
+        }
+      },
       { status: 500 }
     );
   }
