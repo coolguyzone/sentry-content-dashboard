@@ -10,7 +10,7 @@ interface ContentItem {
   description: string;
   url: string;
   publishedAt: string;
-  source: 'blog' | 'youtube' | 'docs';
+  source: 'blog' | 'youtube' | 'docs' | 'changelog';
   thumbnail?: string;
   author?: string;
   duration?: string;
@@ -21,7 +21,7 @@ export default function Home() {
   const [content, setContent] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube' | 'docs'>('all');
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube' | 'docs' | 'changelog'>('all');
 
   useEffect(() => {
     fetchContent();
@@ -33,15 +33,17 @@ export default function Home() {
       setError(null);
 
       // Fetch all content sources
-      const [blogResponse, youtubeResponse, docsResponse] = await Promise.all([
+      const [blogResponse, youtubeResponse, docsResponse, changelogResponse] = await Promise.all([
         axios.get('/api/blog'),
         axios.get('/api/youtube'),
-        axios.get('/api/docs')
+        axios.get('/api/docs'),
+        axios.get('/api/changelog')
       ]);
 
       const blogPosts = blogResponse.data || [];
       const youtubeVideos = youtubeResponse.data || [];
       const docsPages = docsResponse.data || [];
+      const changelogItems = (changelogResponse.data || []) as ContentItem[];
 
       // Transform docs pages to match content item format
       const transformedDocs = docsPages.map((page: any) => ({
@@ -55,7 +57,7 @@ export default function Home() {
       }));
 
       // Combine and sort by publication date
-      const allContent = [...blogPosts, ...youtubeVideos, ...transformedDocs].sort((a, b) => 
+      const allContent = [...blogPosts, ...youtubeVideos, ...transformedDocs, ...changelogItems].sort((a, b) => 
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
       );
 
@@ -72,9 +74,10 @@ export default function Home() {
     const blogCount = content.filter(item => item.source === 'blog').length;
     const youtubeCount = content.filter(item => item.source === 'youtube').length;
     const docsCount = content.filter(item => item.source === 'docs').length;
+    const changelogCount = content.filter(item => item.source === 'changelog').length;
     const totalCount = content.length;
     
-    return { blogCount, youtubeCount, docsCount, totalCount };
+    return { blogCount, youtubeCount, docsCount, changelogCount, totalCount };
   };
 
   const getFilteredContent = () => {
@@ -155,6 +158,10 @@ export default function Home() {
                 <div className="pixel-text text-4xl font-bold text-yellow-400 font-['Press_Start_2P']">{stats.docsCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">DOCS</div>
               </div>
+              <div className="text-center">
+                <div className="pixel-text text-4xl font-bold text-purple-400 font-['Press_Start_2P']">{stats.changelogCount}</div>
+                <div className="text-sm text-cyan-400 font-['VT323']">CHANGELOG</div>
+              </div>
             </div>
           </div>
         </div>
@@ -195,6 +202,14 @@ export default function Home() {
               }`}
             >
               DOCUMENTATION
+            </button>
+            <button
+              onClick={() => setSelectedFilter('changelog')}
+              className={`retro-button px-6 py-3 font-['Press_Start_2P'] text-sm ${
+                selectedFilter === 'changelog' ? 'bg-purple-400 text-retro-bg' : ''
+              }`}
+            >
+              CHANGELOG
             </button>
           </div>
         </div>
@@ -241,12 +256,14 @@ export default function Home() {
 function ContentCard({ item }: { item: ContentItem }) {
   const isYouTube = item.source === 'youtube';
   const isDocs = item.source === 'docs';
+  const isChangelog = item.source === 'changelog';
   const publishedDate = format(new Date(item.publishedAt), 'MMM d, yyyy');
   
   return (
     <div className={`bg-retro-card backdrop-blur-sm rounded-lg transition-all duration-300 hover:scale-105 ${
       isYouTube ? 'pixel-border-red' : 
       isDocs ? 'pixel-border' : 
+      isChangelog ? 'pixel-border-purple' :
       'pixel-border-blue'
     }`}>
       {/* Thumbnail */}
@@ -279,9 +296,11 @@ function ContentCard({ item }: { item: ContentItem }) {
               ? 'bg-red-900 text-red-200 border-2 border-red-400' 
               : isDocs
               ? 'bg-yellow-900 text-yellow-200 border-2 border-yellow-400'
+              : isChangelog
+              ? 'bg-purple-900 text-purple-200 border-2 border-purple-400'
               : 'bg-blue-900 text-blue-200 border-2 border-blue-400'
           }`}>
-            {isYouTube ? '🎥 YOUTUBE' : isDocs ? '📚 DOCS' : '📝 BLOG'}
+            {isYouTube ? '🎥 YOUTUBE' : isDocs ? '📚 DOCS' : isChangelog ? '🗒️ CHANGELOG' : '📝 BLOG'}
           </span>
           <span className="text-xs text-cyan-400 font-['VT323']">{publishedDate}</span>
         </div>
@@ -317,10 +336,12 @@ function ContentCard({ item }: { item: ContentItem }) {
               ? 'border-red-400 text-red-400 hover:bg-red-400 hover:text-retro-bg'
               : isDocs
               ? 'border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-retro-bg'
+              : isChangelog
+              ? 'border-purple-400 text-purple-400 hover:bg-purple-400 hover:text-retro-bg'
               : 'border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-retro-bg'
           }`}
         >
-          {isYouTube ? 'WATCH VIDEO' : isDocs ? 'READ DOCS' : 'READ POST'}
+          {isYouTube ? 'WATCH VIDEO' : isDocs ? 'READ DOCS' : isChangelog ? 'VIEW CHANGELOG' : 'READ POST'}
           <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
