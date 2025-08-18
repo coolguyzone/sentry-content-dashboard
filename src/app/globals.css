@@ -55,6 +55,15 @@
     0 0 0 8px var(--pixel-blue);
 }
 
+.pixel-border-purple {
+  border: 2px solid var(--pixel-purple);
+  box-shadow: 
+    0 0 0 2px var(--retro-bg),
+    0 0 0 4px var(--pixel-purple),
+    0 0 0 6px var(--retro-bg),
+    0 0 0 8px var(--pixel-purple);
+}
+
 .pixel-text {
   text-shadow: 
     2px 2px 0px var(--retro-bg),
