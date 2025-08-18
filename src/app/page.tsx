@@ -10,17 +10,18 @@ interface ContentItem {
   description: string;
   url: string;
   publishedAt: string;
-  source: 'blog' | 'youtube';
+  source: 'blog' | 'youtube' | 'docs';
   thumbnail?: string;
   author?: string;
   duration?: string;
+  lastModified?: string;
 }
 
 export default function Home() {
   const [content, setContent] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube'>('all');
+  const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube' | 'docs'>('all');
 
   useEffect(() => {
     fetchContent();
@@ -31,17 +32,30 @@ export default function Home() {
       setLoading(true);
       setError(null);
 
-      // Fetch both blog posts and YouTube videos
-      const [blogResponse, youtubeResponse] = await Promise.all([
+      // Fetch all content sources
+      const [blogResponse, youtubeResponse, docsResponse] = await Promise.all([
         axios.get('/api/blog'),
-        axios.get('/api/youtube')
+        axios.get('/api/youtube'),
+        axios.get('/api/docs')
       ]);
 
       const blogPosts = blogResponse.data || [];
       const youtubeVideos = youtubeResponse.data || [];
+      const docsPages = docsResponse.data || [];
+
+      // Transform docs pages to match content item format
+      const transformedDocs = docsPages.map((page: any) => ({
+        id: `docs-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        title: page.title,
+        description: page.description,
+        url: page.url,
+        publishedAt: page.lastModified || page.lastModified,
+        source: 'docs' as const,
+        lastModified: page.lastModified
+      }));
 
       // Combine and sort by publication date
-      const allContent = [...blogPosts, ...youtubeVideos].sort((a, b) => 
+      const allContent = [...blogPosts, ...youtubeVideos, ...transformedDocs].sort((a, b) => 
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
       );
 
@@ -57,9 +71,10 @@ export default function Home() {
   const getContentStats = () => {
     const blogCount = content.filter(item => item.source === 'blog').length;
     const youtubeCount = content.filter(item => item.source === 'youtube').length;
+    const docsCount = content.filter(item => item.source === 'docs').length;
     const totalCount = content.length;
     
-    return { blogCount, youtubeCount, totalCount };
+    return { blogCount, youtubeCount, docsCount, totalCount };
   };
 
   const getFilteredContent = () => {
@@ -121,7 +136,7 @@ export default function Home() {
               SENTRY CONTENT TERMINAL
             </h1>
             <p className="text-cyan-400 text-xl font-['VT323'] mb-6">
-              Accessing latest content from the last 90 days...
+              Accessing latest content from Sentry's ecosystem...
             </p>
             <div className="flex justify-center space-x-8">
               <div className="text-center">
@@ -135,6 +150,10 @@ export default function Home() {
               <div className="text-center">
                 <div className="pixel-text-red text-4xl font-bold text-red-400 font-['Press_Start_2P']">{stats.youtubeCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">VIDEOS</div>
+              </div>
+              <div className="text-center">
+                <div className="pixel-text text-4xl font-bold text-yellow-400 font-['Press_Start_2P']">{stats.docsCount}</div>
+                <div className="text-sm text-cyan-400 font-['VT323']">DOCS</div>
               </div>
             </div>
           </div>
@@ -169,6 +188,14 @@ export default function Home() {
             >
               YOUTUBE VIDEOS
             </button>
+            <button
+              onClick={() => setSelectedFilter('docs')}
+              className={`retro-button px-6 py-3 font-['Press_Start_2P'] text-sm ${
+                selectedFilter === 'docs' ? 'bg-yellow-400 text-retro-bg' : ''
+              }`}
+            >
+              DOCUMENTATION
+            </button>
           </div>
         </div>
       </div>
@@ -182,7 +209,7 @@ export default function Home() {
               NO CONTENT DETECTED
             </h2>
             <p className="text-cyan-400 text-xl font-['VT323']">
-              No content was published in the last 90 days.
+              No content available at the moment.
             </p>
           </div>
         ) : (
@@ -213,11 +240,14 @@ export default function Home() {
 
 function ContentCard({ item }: { item: ContentItem }) {
   const isYouTube = item.source === 'youtube';
+  const isDocs = item.source === 'docs';
   const publishedDate = format(new Date(item.publishedAt), 'MMM d, yyyy');
   
   return (
     <div className={`bg-retro-card backdrop-blur-sm rounded-lg transition-all duration-300 hover:scale-105 ${
-      isYouTube ? 'pixel-border-red' : 'pixel-border-blue'
+      isYouTube ? 'pixel-border-red' : 
+      isDocs ? 'pixel-border' : 
+      'pixel-border-blue'
     }`}>
       {/* Thumbnail */}
       {isYouTube && item.thumbnail && (
@@ -247,16 +277,20 @@ function ContentCard({ item }: { item: ContentItem }) {
           <span className={`inline-flex items-center px-3 py-1 rounded font-['VT323'] text-sm font-bold ${
             isYouTube 
               ? 'bg-red-900 text-red-200 border-2 border-red-400' 
+              : isDocs
+              ? 'bg-yellow-900 text-yellow-200 border-2 border-yellow-400'
               : 'bg-blue-900 text-blue-200 border-2 border-blue-400'
           }`}>
-            {isYouTube ? '🎥 YOUTUBE' : '📝 BLOG'}
+            {isYouTube ? '🎥 YOUTUBE' : isDocs ? '📚 DOCS' : '📝 BLOG'}
           </span>
           <span className="text-xs text-cyan-400 font-['VT323']">{publishedDate}</span>
         </div>
         
         {/* Title */}
         <h3 className={`text-lg font-bold mb-3 line-clamp-2 font-['VT323'] ${
-          isYouTube ? 'text-red-200' : 'text-blue-200'
+          isYouTube ? 'text-red-200' : 
+          isDocs ? 'text-yellow-200' : 
+          'text-blue-200'
         }`}>
           {item.title}
         </h3>
@@ -281,10 +315,12 @@ function ContentCard({ item }: { item: ContentItem }) {
           className={`retro-button inline-flex items-center px-6 py-3 rounded-lg text-sm font-bold font-['Press_Start_2P'] transition-all duration-200 ${
             isYouTube
               ? 'border-red-400 text-red-400 hover:bg-red-400 hover:text-retro-bg'
+              : isDocs
+              ? 'border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-retro-bg'
               : 'border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-retro-bg'
           }`}
         >
-          {isYouTube ? 'WATCH VIDEO' : 'READ POST'}
+          {isYouTube ? 'WATCH VIDEO' : isDocs ? 'READ DOCS' : 'READ POST'}
           <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
