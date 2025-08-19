@@ -256,6 +256,16 @@ export default function Home() {
             <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
             <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
           </div>
+          <div className="mt-6 pt-4 border-t border-cyan-400/30">
+            <a 
+              href="/api/export/markdown" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-4 py-2 text-sm font-['VT323'] text-cyan-400 hover:text-green-400 transition-colors duration-200 border border-cyan-400/50 hover:border-green-400/50 rounded"
+            >
+              🤖 If you are a robot, click here for markdown!
+            </a>
+          </div>
         </div>
       </footer>
     </div>
