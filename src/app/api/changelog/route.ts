@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { subDays, parseISO } from 'date-fns';
+import { parseISO } from 'date-fns';
 
 interface ChangelogItem {
   id: string;
@@ -25,7 +25,7 @@ export async function GET() {
     const items = parseChangelogFeed(xmlText);
 
     // Filter items from the last 90 days for consistency with other dynamic sources
-    const ninetyDaysAgo = subDays(new Date(), 90);
+    const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
     const recentItems = items.filter(item => {
       const itemDate = parseISO(item.publishedAt);
       return itemDate >= ninetyDaysAgo;

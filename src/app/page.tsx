@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { format, subDays } from 'date-fns';
+import { format } from 'date-fns';
 import axios from 'axios';
+import Image from 'next/image';
 
 interface ContentItem {
   id: string;
@@ -15,6 +16,14 @@ interface ContentItem {
   author?: string;
   duration?: string;
   lastModified?: string;
+}
+
+interface DocsPage {
+  title: string;
+  description: string;
+  url: string;
+  lastModified: string;
+  source: 'docs';
 }
 
 export default function Home() {
@@ -46,7 +55,7 @@ export default function Home() {
       const changelogItems = (changelogResponse.data || []) as ContentItem[];
 
       // Transform docs pages to match content item format
-      const transformedDocs = docsPages.map((page: any) => ({
+      const transformedDocs = docsPages.map((page: DocsPage) => ({
         id: `docs-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
         title: page.title,
         description: page.description,
@@ -139,7 +148,7 @@ export default function Home() {
               SENTRY CONTENT TERMINAL
             </h1>
             <p className="text-cyan-400 text-xl font-['VT323'] mb-6">
-              Accessing latest content from Sentry's ecosystem...
+              Accessing latest content from Sentry&apos;s ecosystem...
             </p>
             <div className="flex justify-center space-x-8">
               <div className="text-center">
@@ -268,11 +277,12 @@ function ContentCard({ item }: { item: ContentItem }) {
     }`}>
       {/* Thumbnail */}
       {isYouTube && item.thumbnail && (
-        <div className="relative">
-          <img 
+        <div className="relative w-full h-48">
+          <Image
             src={item.thumbnail} 
             alt={item.title}
-            className="w-full h-48 object-cover rounded-t-lg"
+            fill
+            className="object-cover rounded-t-lg"
           />
           {item.duration && (
             <div className="absolute bottom-2 right-2 bg-black/90 text-white text-xs px-2 py-1 rounded font-['VT323']">

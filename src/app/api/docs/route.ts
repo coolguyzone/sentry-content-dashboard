@@ -38,7 +38,7 @@ export async function GET() {
         const dateA = new Date(a.lastModified).getTime();
         const dateB = new Date(b.lastModified).getTime();
         return dateB - dateA;
-      } catch (error) {
+      } catch {
         return 0; // Keep original order if dates are invalid
       }
     });
