@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import axios from 'axios';
+import { headers } from 'next/headers';
 
 interface ContentItem {
   id: string;
@@ -26,12 +27,20 @@ export async function GET() {
   try {
     console.log('Markdown export API request received');
 
-    // Fetch all content sources
+    // Get the base URL from the request headers
+    const headersList = await headers();
+    const host = headersList.get('host') || 'localhost:3000';
+    const protocol = headersList.get('x-forwarded-proto') || 'http';
+    const baseUrl = `${protocol}://${host}`;
+
+    console.log('Base URL for API calls:', baseUrl);
+
+    // Fetch all content sources using full URLs
     const [blogResponse, youtubeResponse, docsResponse, changelogResponse] = await Promise.all([
-      axios.get('/api/blog'),
-      axios.get('/api/youtube'),
-      axios.get('/api/docs'),
-      axios.get('/api/changelog')
+      axios.get(`${baseUrl}/api/blog`),
+      axios.get(`${baseUrl}/api/youtube`),
+      axios.get(`${baseUrl}/api/docs`),
+      axios.get(`${baseUrl}/api/changelog`)
     ]);
 
     const blogPosts = blogResponse.data || [];
