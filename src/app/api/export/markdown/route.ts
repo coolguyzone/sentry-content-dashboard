@@ -28,10 +28,10 @@ export async function GET() {
 
     // Fetch all content sources
     const [blogResponse, youtubeResponse, docsResponse, changelogResponse] = await Promise.all([
-      axios.get('http://localhost:3000/api/blog'),
-      axios.get('http://localhost:3000/api/youtube'),
-      axios.get('http://localhost:3000/api/docs'),
-      axios.get('http://localhost:3000/api/changelog')
+      axios.get('/api/blog'),
+      axios.get('/api/youtube'),
+      axios.get('/api/docs'),
+      axios.get('/api/changelog')
     ]);
 
     const blogPosts = blogResponse.data || [];
