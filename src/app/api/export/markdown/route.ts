@@ -14,6 +14,14 @@ interface ContentItem {
   lastModified?: string;
 }
 
+interface DocsPage {
+  title: string;
+  description: string;
+  url: string;
+  lastModified: string;
+  source: 'docs';
+}
+
 export async function GET() {
   try {
     console.log('Markdown export API request received');
@@ -32,7 +40,7 @@ export async function GET() {
     const changelogItems = changelogResponse.data || [];
 
     // Transform docs pages to match content item format
-    const transformedDocs = docsPages.map((page: any) => ({
+    const transformedDocs = docsPages.map((page: DocsPage) => ({
       id: `docs-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
       title: page.title,
       description: page.description,
