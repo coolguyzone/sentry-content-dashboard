@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { subDays, parseISO } from 'date-fns';
+import { detectCategories } from '../../../utils/categoryDetector';
 
 interface BlogPost {
   id: string;
@@ -9,6 +10,7 @@ interface BlogPost {
   publishedAt: string;
   source: 'blog';
   author?: string;
+  categories: string[];
 }
 
 export async function GET() {
@@ -96,6 +98,7 @@ function parseRSSFeed(xmlText: string): BlogPost[] {
       const author = authorMatch ? decodeXMLEntities(authorMatch[1].trim()) : undefined;
       
       if (title && url) {
+        const categories = detectCategories(cleanCDATA(title), cleanCDATA(description), 'blog');
         posts.push({
           id: `blog-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
           title: cleanCDATA(title),
@@ -104,6 +107,7 @@ function parseRSSFeed(xmlText: string): BlogPost[] {
           publishedAt,
           source: 'blog',
           author,
+          categories,
         });
       }
     }

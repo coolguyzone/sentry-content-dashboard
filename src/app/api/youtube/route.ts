@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { subDays, parseISO } from 'date-fns';
 import { config } from '../../../../config';
+import { detectCategories } from '../../../utils/categoryDetector';
 
 interface YouTubeVideo {
   id: string;
@@ -11,6 +12,7 @@ interface YouTubeVideo {
   source: 'youtube';
   thumbnail?: string;
   duration?: string;
+  categories: string[];
 }
 
 interface YouTubeAPIResponse {
@@ -84,15 +86,19 @@ export async function GET() {
     console.log('YouTube API response items:', data.items?.length || 0);
     
     // Transform API response to our video format
-    const videos: YouTubeVideo[] = data.items.map(item => ({
-      id: item.id.videoId,
-      title: item.snippet.title,
-      description: item.snippet.description,
-      url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
-      publishedAt: item.snippet.publishedAt,
-      source: 'youtube',
-      thumbnail: item.snippet.thumbnails.medium.url,
-    }));
+    const videos: YouTubeVideo[] = data.items.map(item => {
+      const categories = detectCategories(item.snippet.title, item.snippet.description, 'youtube');
+      return {
+        id: item.id.videoId,
+        title: item.snippet.title,
+        description: item.snippet.description,
+        url: `https://www.youtube.com/watch?v=${item.id.videoId}`,
+        publishedAt: item.snippet.publishedAt,
+        source: 'youtube',
+        thumbnail: item.snippet.thumbnails.medium.url,
+        categories,
+      };
+    });
 
     // Filter videos from the last 90 days
     const cutoffDate = subDays(new Date(), config.content.daysToShow);
