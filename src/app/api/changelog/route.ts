@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { parseISO } from 'date-fns';
+import { detectCategories } from '../../../utils/categoryDetector';
 
 interface ChangelogItem {
   id: string;
@@ -8,6 +9,7 @@ interface ChangelogItem {
   url: string;
   publishedAt: string;
   source: 'changelog';
+  categories: string[];
 }
 
 export async function GET() {
@@ -68,13 +70,15 @@ function parseChangelogFeed(xmlText: string): ChangelogItem[] {
 
       if (title && link) {
         const publishedAt = pubDate ? new Date(pubDate).toISOString() : new Date().toISOString();
+        const categories = detectCategories(cleanCDATA(title), cleanCDATA(description || ''), 'changelog');
         items.push({
           id: `changelog-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
           title: cleanCDATA(title),
           description: cleanCDATA(description || ''),
           url: link.trim(),
           publishedAt,
-          source: 'changelog'
+          source: 'changelog',
+          categories
         });
       }
     }
@@ -90,13 +94,15 @@ function parseChangelogFeed(xmlText: string): ChangelogItem[] {
 
       if (title && link) {
         const publishedAt = updated ? new Date(updated).toISOString() : new Date().toISOString();
+        const categories = detectCategories(cleanCDATA(title), cleanCDATA(summary || ''), 'changelog');
         items.push({
           id: `changelog-${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
           title: cleanCDATA(title),
           description: cleanCDATA(summary || ''),
           url: link.trim(),
           publishedAt,
-          source: 'changelog'
+          source: 'changelog',
+          categories
         });
       }
     }

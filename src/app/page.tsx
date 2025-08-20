@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import axios from 'axios';
 import Image from 'next/image';
+import { CATEGORIES, getCategoryById, getCategoryColor, getCategoryName } from '../utils/categoryDetector';
 
 interface ContentItem {
   id: string;
@@ -16,6 +17,7 @@ interface ContentItem {
   author?: string;
   duration?: string;
   lastModified?: string;
+  categories: string[];
 }
 
 interface DocsPage {
@@ -31,6 +33,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube' | 'docs' | 'changelog'>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   useEffect(() => {
     fetchContent();
@@ -62,7 +65,8 @@ export default function Home() {
         url: page.url,
         publishedAt: page.lastModified || page.lastModified,
         source: 'docs' as const,
-        lastModified: page.lastModified
+        lastModified: page.lastModified,
+        categories: ['technical'] // Docs are typically technical
       }));
 
       // Combine and sort by publication date
@@ -86,12 +90,36 @@ export default function Home() {
     const changelogCount = content.filter(item => item.source === 'changelog').length;
     const totalCount = content.length;
     
-    return { blogCount, youtubeCount, docsCount, changelogCount, totalCount };
+    // Category statistics
+    const categoryStats = CATEGORIES.map(category => ({
+      id: category.id,
+      name: category.name,
+      count: content.filter(item => item.categories.includes(category.id)).length,
+      color: category.color
+    }));
+    
+    return { blogCount, youtubeCount, docsCount, changelogCount, totalCount, categoryStats };
   };
 
   const getFilteredContent = () => {
-    if (selectedFilter === 'all') return content;
-    return content.filter(item => item.source === selectedFilter);
+    let filtered = content;
+    
+    // Filter by source
+    if (selectedFilter !== 'all') {
+      filtered = filtered.filter(item => item.source === selectedFilter);
+    }
+    
+    // Filter by category
+    if (selectedCategory !== 'all') {
+      filtered = filtered.filter(item => item.categories.includes(selectedCategory));
+    }
+    
+    return filtered;
+  };
+
+  const resetFilters = () => {
+    setSelectedFilter('all');
+    setSelectedCategory('all');
   };
 
   const stats = getContentStats();
@@ -150,7 +178,7 @@ export default function Home() {
             <p className="text-cyan-400 text-xl font-['VT323'] mb-6">
               Accessing latest content from Sentry&apos;s ecosystem...
             </p>
-            <div className="flex justify-center space-x-8">
+            <div className="flex justify-center space-x-8 mb-8">
               <div className="text-center">
                 <div className="pixel-text text-4xl font-bold text-green-400 font-['Press_Start_2P']">{stats.totalCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">TOTAL ITEMS</div>
@@ -172,6 +200,18 @@ export default function Home() {
                 <div className="text-sm text-cyan-400 font-['VT323']">CHANGELOG</div>
               </div>
             </div>
+            
+            {/* Category Statistics */}
+            <div className="flex justify-center space-x-6">
+              {stats.categoryStats.map((category) => (
+                <div key={category.id} className="text-center">
+                  <div className={`pixel-text text-2xl font-bold font-['Press_Start_2P'] ${category.color.replace('bg-', 'text-')}`}>
+                    {category.count}
+                  </div>
+                  <div className="text-xs text-cyan-400 font-['VT323']">{category.name.toUpperCase()}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </header>
@@ -179,7 +219,8 @@ export default function Home() {
       {/* Filter Controls */}
       <div className="bg-retro-card/50 border-b-2 border-green-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex justify-center space-x-4">
+          {/* Source Filters */}
+          <div className="flex justify-center space-x-4 mb-4">
             <button
               onClick={() => setSelectedFilter('all')}
               className={`retro-button px-6 py-3 font-['Press_Start_2P'] text-sm ${
@@ -221,8 +262,63 @@ export default function Home() {
               CHANGELOG
             </button>
           </div>
+          
+          {/* Category Filters */}
+          <div className="flex justify-center space-x-4">
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`retro-button px-4 py-2 font-['Press_Start_2P'] text-xs ${
+                selectedCategory === 'all' ? 'bg-green-400 text-retro-bg' : ''
+              }`}
+            >
+              ALL CATEGORIES
+            </button>
+            {CATEGORIES.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`retro-button px-4 py-2 font-['Press_Start_2P'] text-xs ${
+                  selectedCategory === category.id ? `${category.color} text-white` : ''
+                }`}
+              >
+                {category.name.toUpperCase()}
+              </button>
+            ))}
+            <button
+              onClick={resetFilters}
+              className="retro-button px-4 py-2 font-['Press_Start_2P'] text-xs bg-gray-600 text-white hover:bg-gray-500"
+            >
+              RESET
+            </button>
+          </div>
         </div>
       </div>
+
+      {/* Filter Summary */}
+      {(selectedFilter !== 'all' || selectedCategory !== 'all') && (
+        <div className="bg-retro-card/30 border-b border-green-400/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <div className="text-center">
+              <span className="text-cyan-400 font-['VT323'] text-sm">
+                FILTERING: 
+                {selectedFilter !== 'all' && (
+                  <span className="ml-2 inline-block px-2 py-1 bg-blue-600 text-white text-xs rounded font-['Press_Start_2P']">
+                    {selectedFilter.toUpperCase()}
+                  </span>
+                )}
+                {selectedCategory !== 'all' && (
+                  <span className="ml-2 inline-block px-2 py-1 bg-yellow-600 text-white text-xs rounded font-['Press_Start_2P']">
+                    {getCategoryName(selectedCategory).toUpperCase()}
+                  </span>
+                )}
+                <span className="ml-4 text-green-400">
+                  {filteredContent.length} of {content.length} items
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -324,6 +420,23 @@ function ContentCard({ item }: { item: ContentItem }) {
           </span>
           <span className="text-xs text-cyan-400 font-['VT323']">{publishedDate}</span>
         </div>
+        
+        {/* Categories */}
+        {item.categories && item.categories.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-3">
+            {item.categories.map((categoryId) => {
+              const category = getCategoryById(categoryId);
+              return category ? (
+                <span
+                  key={categoryId}
+                  className={`inline-flex items-center px-2 py-1 rounded text-xs font-bold font-['VT323'] ${category.color} text-white`}
+                >
+                  {category.name}
+                </span>
+              ) : null;
+            })}
+          </div>
+        )}
         
         {/* Title */}
         <h3 className={`text-lg font-bold mb-3 line-clamp-2 font-['VT323'] ${

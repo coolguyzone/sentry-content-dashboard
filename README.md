@@ -8,7 +8,7 @@ A retro 8-bit video game styled content aggregator that brings together the late
 - **📝 Blog Aggregation** - Latest posts from blog.sentry.io
 - **📚 Documentation Monitoring** - New pages from docs.sentry.io
 - **🎮 Retro Gaming UI** - 8-bit pixel art aesthetic with neon colors
-- **🔍 Content Filtering** - Filter by source type (All, Blog, YouTube, Docs)
+- **🔍 Content Filtering** - Filter by source type (All, Blog, YouTube, Docs) and category (Gaming, Mobile, Web, Technical, Business)
 - **📱 Responsive Design** - Works on all devices
 - **⚡ Real-time Updates** - Fresh content every time you visit
 
@@ -66,6 +66,18 @@ A retro 8-bit video game styled content aggregator that brings together the late
 - **Blog**: Automatically fetches from `https://blog.sentry.io/feed.xml`
 - **YouTube**: Uses your API key to fetch from Sentry's official channel
 - **Documentation**: Monitors `https://docs.sentry.io` for new pages
+
+## 🏷️ Content Categories
+
+The app automatically categorizes content into 5 main categories:
+
+- **🎮 Gaming** - Unity, Godot, game development, and gaming SDKs
+- **📱 Mobile** - iOS, Android, Flutter, React Native, and mobile development
+- **🌐 Web** - JavaScript, React, Node.js, and web development
+- **⚙️ Technical** - SDKs, APIs, tutorials, and development guides
+- **💼 Business** - Product announcements, company news, and business updates
+
+Content is automatically categorized using intelligent keyword matching and can appear in multiple categories for better discoverability.
 
 ## 📊 Docs Monitoring Cron Job
 
@@ -166,6 +178,28 @@ sentry-content-aggregator/
 │   └── docs-pages.json        # Discovered docs storage
 └── config.ts                  # App configuration
 ```
+
+## 🔍 Content Filtering
+
+The app provides powerful filtering capabilities:
+
+### Source Filtering
+- **All Content** - View everything from all sources
+- **Blog Posts** - Only blog articles from Sentry
+- **YouTube Videos** - Only video content
+- **Documentation** - Only technical docs
+- **Changelog** - Only product updates
+
+### Category Filtering
+- **All Categories** - View content from any category
+- **Gaming** - Game development and gaming SDK content
+- **Mobile** - Mobile app development content
+- **Web** - Web development and frontend content
+- **Technical** - SDKs, APIs, and development guides
+- **Business** - Product announcements and company news
+
+### Combined Filtering
+You can combine source and category filters to find exactly what you're looking for. For example, show only technical blog posts or gaming-related videos.
 
 ## 🔍 API Endpoints
 
