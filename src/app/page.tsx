@@ -6,6 +6,21 @@ import axios from 'axios';
 import Image from 'next/image';
 import { CATEGORIES, getCategoryById, getCategoryColor, getCategoryName } from '../utils/categoryDetector';
 
+// Custom hook for swirling animation
+function useSwirlingAnimation(duration: number = 2000) {
+  const [isAnimating, setIsAnimating] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsAnimating(false);
+    }, duration);
+
+    return () => clearTimeout(timer);
+  }, [duration]);
+
+  return isAnimating;
+}
+
 // Hamburger menu icon component
 const HamburgerIcon = ({ isOpen }: { isOpen: boolean }) => (
   <div className="flex flex-col justify-center items-center w-6 h-6">
@@ -44,6 +59,9 @@ export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube' | 'docs' | 'changelog'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Swirling animation for desktop header
+  const isSwirling = useSwirlingAnimation(2500);
 
   useEffect(() => {
     fetchContent();
@@ -194,7 +212,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6 lg:py-8">
           <div className="text-center">
             <h1 className="pixel-text text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-green-400 mb-2 sm:mb-4 font-['Press_Start_2P'] leading-tight">
-              SENTRY CONTENT TERMINAL
+              <span className={`inline-block ${isSwirling ? 'animate-swirl-in' : ''}`}>SENTRY</span>{' '}
+              <span className={`inline-block ${isSwirling ? 'animate-swirl-in-reverse' : ''}`}>CONTENT</span>{' '}
+              <span className={`inline-block ${isSwirling ? 'animate-swirl-in' : ''}`}>TERMINAL</span>
             </h1>
             <p className="text-cyan-400 text-sm sm:text-lg lg:text-xl font-['VT323'] mb-4 sm:mb-6 px-2">
               Accessing the latest content from Sentry&apos;s ecosystem...
@@ -203,32 +223,36 @@ export default function Home() {
             {/* Source Statistics - Hidden on Mobile & Tablet, Desktop Only */}
             <div className="hidden lg:grid grid-cols-5 gap-8 mb-8">
               <div className="text-center">
-                <div className="pixel-text text-4xl font-bold text-green-400 font-['Press_Start_2P']">{stats.totalCount}</div>
+                <div className={`pixel-text text-4xl font-bold text-green-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in' : ''}`}>{stats.totalCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">TOTAL</div>
               </div>
               <div className="text-center">
-                <div className="pixel-text-blue text-4xl font-bold text-blue-400 font-['Press_Start_2P']">{stats.blogCount}</div>
+                <div className={`pixel-text-blue text-4xl font-bold text-blue-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in-left' : ''}`}>{stats.blogCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">BLOG</div>
               </div>
               <div className="text-center">
-                <div className="pixel-text-red text-4xl font-bold text-red-400 font-['Press_Start_2P']">{stats.youtubeCount}</div>
+                <div className={`pixel-text-red text-4xl font-bold text-red-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in-reverse' : ''}`}>{stats.youtubeCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">VIDEOS</div>
               </div>
               <div className="text-center">
-                <div className="pixel-text text-4xl font-bold text-yellow-400 font-['Press_Start_2P']">{stats.docsCount}</div>
+                <div className={`pixel-text text-4xl font-bold text-yellow-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in-right' : ''}`}>{stats.docsCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">DOCS</div>
               </div>
               <div className="text-center">
-                <div className="pixel-text text-4xl font-bold text-purple-400 font-['Press_Start_2P']">{stats.changelogCount}</div>
+                <div className={`pixel-text text-4xl font-bold text-purple-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in' : ''}`}>{stats.changelogCount}</div>
                 <div className="text-sm text-cyan-400 font-['VT323']">CHANGELOG</div>
               </div>
             </div>
             
             {/* Category Statistics - Hidden on Mobile & Tablet, Desktop Only */}
             <div className="hidden lg:grid grid-cols-5 gap-6">
-              {stats.categoryStats.map((category) => (
+              {stats.categoryStats.map((category, index) => (
                 <div key={category.id} className="text-center">
-                  <div className={`pixel-text text-2xl font-bold font-['Press_Start_2P'] ${category.color.replace('bg-', 'text-')}`}>
+                  <div className={`pixel-text text-2xl font-bold font-['Press_Start_2P'] ${category.color.replace('bg-', 'text-')} ${isSwirling ? 
+                    index % 4 === 0 ? 'animate-swirl-in' : 
+                    index % 4 === 1 ? 'animate-swirl-in-reverse' : 
+                    index % 4 === 2 ? 'animate-swirl-in-left' : 
+                    'animate-swirl-in-right' : ''}`}>
                     {category.count}
                   </div>
                   <div className="text-xs text-cyan-400 font-['VT323'] leading-tight">{category.name.toUpperCase()}</div>

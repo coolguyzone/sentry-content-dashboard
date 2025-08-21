@@ -49,6 +49,115 @@
   }
 }
 
+/* Custom swirling animations for header elements */
+@keyframes swirl-in {
+  0% {
+    transform: rotate(0deg) scale(0.5) translateY(-50px);
+    opacity: 0;
+  }
+  25% {
+    transform: rotate(90deg) scale(0.8) translateY(-25px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2) translateY(0px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: rotate(270deg) scale(1.1) translateY(10px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(360deg) scale(1) translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes swirl-in-reverse {
+  0% {
+    transform: rotate(0deg) scale(0.5) translateY(50px);
+    opacity: 0;
+  }
+  25% {
+    transform: rotate(-90deg) scale(0.8) translateY(25px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(-180deg) scale(1.2) translateY(0px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: rotate(-270deg) scale(1.1) translateY(-10px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(-360deg) scale(1) translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes swirl-in-left {
+  0% {
+    transform: rotate(0deg) scale(0.5) translateX(-100px);
+    opacity: 0;
+  }
+  25% {
+    transform: rotate(45deg) scale(0.8) translateX(-50px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(90deg) scale(1.2) translateX(-25px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: rotate(135deg) scale(1.1) translateX(-10px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(180deg) scale(1) translateX(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes swirl-in-right {
+  0% {
+    transform: rotate(0deg) scale(0.5) translateX(100px);
+    opacity: 0;
+  }
+  25% {
+    transform: rotate(-45deg) scale(0.8) translateX(50px);
+    opacity: 0.5;
+  }
+  50% {
+    transform: rotate(-90deg) scale(1.2) translateX(25px);
+    opacity: 0.8;
+  }
+  75% {
+    transform: rotate(-135deg) scale(1.1) translateX(10px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: rotate(-180deg) scale(1) translateX(0px);
+    opacity: 1;
+  }
+}
+
+.animate-swirl-in {
+  animation: swirl-in 1.5s ease-out forwards;
+}
+
+.animate-swirl-in-reverse {
+  animation: swirl-in-reverse 1.5s ease-out forwards;
+}
+
+.animate-swirl-in-left {
+  animation: swirl-in-left 1.5s ease-out forwards;
+}
+
+.animate-swirl-in-right {
+  animation: swirl-in-right 1.5s ease-out forwards;
+}
+
 .pixel-border-red {
   border: 2px solid var(--pixel-red);
   box-shadow: 
