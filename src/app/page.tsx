@@ -222,32 +222,51 @@ export default function Home() {
             
             {/* Source Statistics - Hidden on Mobile & Tablet, Desktop Only */}
             <div className="hidden lg:grid grid-cols-5 gap-8 mb-8">
-              <div className="text-center">
+              <button 
+                onClick={() => setSelectedFilter('all')}
+                className="text-center group cursor-pointer transition-all duration-200 hover:scale-105 rounded-lg p-2"
+              >
                 <div className={`pixel-text text-4xl font-bold text-green-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in' : ''}`}>{stats.totalCount}</div>
-                <div className="text-sm text-cyan-400 font-['VT323']">TOTAL</div>
-              </div>
-              <div className="text-center">
+                <div className="text-sm text-cyan-400 font-['VT323'] group-hover:text-green-400 transition-colors">TOTAL</div>
+              </button>
+              <button 
+                onClick={() => setSelectedFilter('blog')}
+                className="text-center group cursor-pointer transition-all duration-200 hover:scale-105 rounded-lg p-2"
+              >
                 <div className={`pixel-text-blue text-4xl font-bold text-blue-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in-left' : ''}`}>{stats.blogCount}</div>
-                <div className="text-sm text-cyan-400 font-['VT323']">BLOG</div>
-              </div>
-              <div className="text-center">
+                <div className="text-sm text-cyan-400 font-['VT323'] group-hover:text-blue-400 transition-colors">BLOG</div>
+              </button>
+              <button 
+                onClick={() => setSelectedFilter('youtube')}
+                className="text-center group cursor-pointer transition-all duration-200 hover:scale-105 rounded-lg p-2"
+              >
                 <div className={`pixel-text-red text-4xl font-bold text-red-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in-reverse' : ''}`}>{stats.youtubeCount}</div>
-                <div className="text-sm text-cyan-400 font-['VT323']">VIDEOS</div>
-              </div>
-              <div className="text-center">
+                <div className="text-sm text-cyan-400 font-['VT323'] group-hover:text-red-400 transition-colors">VIDEOS</div>
+              </button>
+              <button 
+                onClick={() => setSelectedFilter('docs')}
+                className="text-center group cursor-pointer transition-all duration-200 hover:scale-105 rounded-lg p-2"
+              >
                 <div className={`pixel-text text-4xl font-bold text-yellow-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in-right' : ''}`}>{stats.docsCount}</div>
-                <div className="text-sm text-cyan-400 font-['VT323']">DOCS</div>
-              </div>
-              <div className="text-center">
+                <div className="text-sm text-cyan-400 font-['VT323'] group-hover:text-yellow-400 transition-colors">DOCS</div>
+              </button>
+              <button 
+                onClick={() => setSelectedFilter('changelog')}
+                className="text-center group cursor-pointer transition-all duration-200 hover:scale-105 rounded-lg p-2"
+              >
                 <div className={`pixel-text text-4xl font-bold text-purple-400 font-['Press_Start_2P'] ${isSwirling ? 'animate-swirl-in' : ''}`}>{stats.changelogCount}</div>
-                <div className="text-sm text-cyan-400 font-['VT323']">CHANGELOG</div>
-              </div>
+                <div className="text-sm text-cyan-400 font-['VT323'] group-hover:text-purple-400 transition-colors">CHANGELOG</div>
+              </button>
             </div>
             
             {/* Category Statistics - Hidden on Mobile & Tablet, Desktop Only */}
             <div className="hidden lg:grid grid-cols-5 gap-6">
               {stats.categoryStats.map((category, index) => (
-                <div key={category.id} className="text-center">
+                <button 
+                  key={category.id} 
+                  onClick={() => setSelectedCategory(category.id)}
+                  className="text-center group cursor-pointer transition-all duration-200 hover:scale-105 rounded-lg p-2"
+                >
                   <div className={`pixel-text text-2xl font-bold font-['Press_Start_2P'] ${category.color.replace('bg-', 'text-')} ${isSwirling ? 
                     index % 4 === 0 ? 'animate-swirl-in' : 
                     index % 4 === 1 ? 'animate-swirl-in-reverse' : 
@@ -255,8 +274,10 @@ export default function Home() {
                     'animate-swirl-in-right' : ''}`}>
                     {category.count}
                   </div>
-                  <div className="text-xs text-cyan-400 font-['VT323'] leading-tight">{category.name.toUpperCase()}</div>
-                </div>
+                  <div className={`text-xs text-cyan-400 font-['VT323'] leading-tight group-hover:${category.color.replace('bg-', 'text-')} transition-colors`}>
+                    {category.name.toUpperCase()}
+                  </div>
+                </button>
               ))}
             </div>
           </div>
