@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Sentry Content Terminal - Retro Gaming Interface",
-  description: "Access the latest Sentry content through our retro 8-bit terminal interface. Blog posts and YouTube videos from the last 90 days.",
-  keywords: ["Sentry", "monitoring", "error tracking", "performance", "blog", "youtube", "retro", "8-bit", "gaming"],
+  title: "Sentry Content Terminal 🤖",
+  description: "Pls Consume Content Here",
+  keywords: ["Sentry", "monitoring", "error tracking", "performance", "blog", "youtube",],
   authors: [{ name: "Sentry Content Terminal" }],
+  icons: {
+    icon: [
+      {
+        url: "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👽</text></svg>",
+        type: "image/svg+xml",
+      },
+    ],
+  },
   openGraph: {
-    title: "Sentry Content Terminal - Retro Gaming Interface",
-    description: "Access the latest Sentry content through our retro 8-bit terminal interface",
+    title: "Sentry Content Terminal 🤖",
+    description: "Pls Consume Content Here",
     type: "website",
   },
 };
