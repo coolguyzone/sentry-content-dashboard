@@ -50,12 +50,14 @@ jobs:
           COMMITS_URL="https://api.github.com/repos/getsentry/sentry-docs/compare/${{ steps.check-commits.outputs.last_sha }}...${{ steps.check-commits.outputs.latest_sha }}"
           echo "Fetching commits from: $COMMITS_URL"
           COMMITS_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" "$COMMITS_URL")
-          COMMITS_ARRAY=$(echo "$COMMITS_DATA" | jq -r '.commits[]?')
+          # For compare API, commits are in .commits array
+          COMMITS_ARRAY=$(echo "$COMMITS_DATA" | jq -r '.commits[]? | select(.sha != null)')
         else
           COMMITS_URL="https://api.github.com/repos/getsentry/sentry-docs/commits?sha=master&per_page=10"
           echo "Fetching commits from: $COMMITS_URL"
           COMMITS_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" "$COMMITS_URL")
-          COMMITS_ARRAY=$(echo "$COMMITS_DATA" | jq -r '.[]?')
+          # For commits API, it's a direct array
+          COMMITS_ARRAY=$(echo "$COMMITS_DATA" | jq -r '.[]? | select(.sha != null)')
         fi
         
         # Process each commit
@@ -94,16 +96,8 @@ jobs:
         
         # Update the last processed SHA
         echo "${{ steps.check-commits.outputs.latest_sha }}" > last-processed-sha.txt
-        
-        # Commit and push the update
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add last-processed-sha.txt
-        git commit -m "Update last processed SHA to ${{ steps.check-commits.outputs.latest_sha }}" || exit 0
-        
-        # Pull any remote changes before pushing
-        git pull --rebase origin main || git pull origin main || true
-        git push origin main
+        echo "✅ Updated last processed SHA to: ${{ steps.check-commits.outputs.latest_sha }}"
+        # Note: We don't push to avoid permission issues - the SHA is stored in the workflow run
         
     - name: No new commits
       if: steps.check-commits.outputs.new_commits == 'false'
