@@ -57,10 +57,10 @@ export async function POST(request: NextRequest) {
 
     const payload: GitHubWebhookPayload = JSON.parse(body);
     
-    // Only process pushes to master branch
-    if (payload.ref !== 'refs/heads/master') {
-      console.log('Ignoring push to non-master branch:', payload.ref);
-      return NextResponse.json({ message: 'Ignored non-master branch' });
+    // Only process pushes to main branch
+    if (payload.ref !== 'refs/heads/main') {
+      console.log('Ignoring push to non-main branch:', payload.ref);
+      return NextResponse.json({ message: 'Ignored non-main branch' });
     }
 
     // Only process sentry-docs repository
