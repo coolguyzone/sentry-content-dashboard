@@ -1,0 +1,96 @@
+name: Monitor Sentry Docs Changes
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  monitor-docs:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout monitoring repo
+      uses: actions/checkout@v4
+      
+    - name: Check for new commits
+      id: check-commits
+      run: |
+        # Get the latest commit SHA from sentry-docs
+        LATEST_SHA=$(curl -s -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/getsentry/sentry-docs/commits/master" | \
+          jq -r '.sha')
+        
+        # Get the last processed SHA from our file
+        if [ -f "last-processed-sha.txt" ]; then
+          LAST_SHA=$(cat last-processed-sha.txt)
+        else
+          LAST_SHA=""
+        fi
+        
+        # Check if there are new commits
+        if [ "$LATEST_SHA" != "$LAST_SHA" ] && [ "$LATEST_SHA" != "" ]; then
+          echo "new_commits=true" >> $GITHUB_OUTPUT
+          echo "latest_sha=$LATEST_SHA" >> $GITHUB_OUTPUT
+          echo "last_sha=$LAST_SHA" >> $GITHUB_OUTPUT
+        else
+          echo "new_commits=false" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Process new commits
+      if: steps.check-commits.outputs.new_commits == 'true'
+      run: |
+        # Get commits since last processed SHA
+        if [ "${{ steps.check-commits.outputs.last_sha }}" != "" ]; then
+          COMMITS_URL="https://api.github.com/repos/getsentry/sentry-docs/compare/${{ steps.check-commits.outputs.last_sha }}...${{ steps.check-commits.outputs.latest_sha }}"
+        else
+          COMMITS_URL="https://api.github.com/repos/getsentry/sentry-docs/commits?sha=master&per_page=10"
+        fi
+        
+        # Get commits data
+        COMMITS_DATA=$(curl -s -H "Accept: application/vnd.github.v3+json" "$COMMITS_URL")
+        
+        # Process each commit
+        echo "$COMMITS_DATA" | jq -r '.commits[]? | select(.commit.message | test("docs|documentation|readme"; "i")) | .sha' | while read -r commit_sha; do
+          if [ "$commit_sha" != "" ]; then
+            echo "Processing commit: $commit_sha"
+            
+            # Trigger your application's webhook
+            curl -X POST "${{ secrets.WEBHOOK_URL }}" \
+              -H "Content-Type: application/json" \
+              -H "X-GitHub-Event: push" \
+              -H "X-Hub-Signature-256: sha256=${{ secrets.WEBHOOK_SECRET }}" \
+              -d "{
+                \"ref\": \"refs/heads/master\",
+                \"commits\": [{
+                  \"id\": \"$commit_sha\",
+                  \"message\": \"$(echo "$COMMITS_DATA" | jq -r --arg sha "$commit_sha" '.commits[]? | select(.sha == $sha) | .commit.message')\",
+                  \"timestamp\": \"$(echo "$COMMITS_DATA" | jq -r --arg sha "$commit_sha" '.commits[]? | select(.sha == $sha) | .commit.author.date')\",
+                  \"url\": \"https://github.com/getsentry/sentry-docs/commit/$commit_sha\",
+                  \"author\": {
+                    \"name\": \"$(echo "$COMMITS_DATA" | jq -r --arg sha "$commit_sha" '.commits[]? | select(.sha == $sha) | .commit.author.name')\",
+                    \"email\": \"$(echo "$COMMITS_DATA" | jq -r --arg sha "$commit_sha" '.commits[]? | select(.sha == $sha) | .commit.author.email')\"
+                  },
+                  \"added\": [],
+                  \"removed\": [],
+                  \"modified\": []
+                }],
+                \"repository\": {
+                  \"name\": \"sentry-docs\",
+                  \"full_name\": \"getsentry/sentry-docs\",
+                  \"html_url\": \"https://github.com/getsentry/sentry-docs\"
+                }
+              }"
+          fi
+        done
+        
+        # Update the last processed SHA
+        echo "${{ steps.check-commits.outputs.latest_sha }}" > last-processed-sha.txt
+        
+        # Commit and push the update
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add last-processed-sha.txt
+        git commit -m "Update last processed SHA to ${{ steps.check-commits.outputs.latest_sha }}" || exit 0
+        git push

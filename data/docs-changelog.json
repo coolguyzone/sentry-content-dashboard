@@ -1,0 +1,36 @@
+[
+  {
+    "id": "docs-abc123",
+    "title": "Docs Update: Improved authentication guide",
+    "description": "Updated authentication documentation with new OAuth flow examples and improved error handling guides. Added troubleshooting section for common authentication issues.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/abc123",
+    "publishedAt": "2024-01-15T10:30:00Z",
+    "source": "changelog",
+    "categories": ["technical", "documentation"],
+    "commitId": "abc123",
+    "author": "John Doe",
+    "filesChanged": {
+      "added": ["docs/auth/oauth.md"],
+      "removed": [],
+      "modified": ["docs/auth/index.md", "docs/auth/troubleshooting.md"]
+    },
+    "aiSummary": "Enhanced authentication documentation with comprehensive OAuth examples and troubleshooting guidance."
+  },
+  {
+    "id": "docs-def456",
+    "title": "Docs Update: New SDK installation guide",
+    "description": "Added detailed installation instructions for the new React Native SDK with step-by-step setup and configuration examples.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/def456",
+    "publishedAt": "2024-01-14T14:20:00Z",
+    "source": "changelog",
+    "categories": ["technical", "documentation"],
+    "commitId": "def456",
+    "author": "Jane Smith",
+    "filesChanged": {
+      "added": ["docs/installation/react-native.md"],
+      "removed": [],
+      "modified": ["docs/installation/index.md"]
+    },
+    "aiSummary": "Comprehensive React Native SDK installation guide with clear setup instructions and configuration examples."
+  }
+]

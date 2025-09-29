@@ -8,6 +8,19 @@ export const config = {
     maxResults: 50,
   },
   
+  // GitHub Integration
+  github: {
+    token: process.env.GITHUB_TOKEN || '',
+    webhookSecret: process.env.GITHUB_WEBHOOK_SECRET || '',
+    repository: 'getsentry/sentry-docs',
+  },
+  
+  // OpenAI Integration
+  openai: {
+    apiKey: process.env.OPENAI_API_KEY || '',
+    model: 'gpt-3.5-turbo',
+  },
+  
   // Blog configuration
   blog: {
     rssUrl: 'https://blog.sentry.io/feed.xml',

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import axios from 'axios';
 import Image from 'next/image';
-import { CATEGORIES, getCategoryById, getCategoryColor, getCategoryName } from '../utils/categoryDetector';
+import { CATEGORIES, getCategoryById, getCategoryName } from '../utils/categoryDetector';
 
 // Custom hook for swirling animation
 function useSwirlingAnimation(duration: number = 2000) {

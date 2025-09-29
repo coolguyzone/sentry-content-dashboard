@@ -16,23 +16,17 @@ export async function GET() {
   try {
     console.log('Changelog API request received');
 
-    const feedUrl = 'https://sentry.io/changelog/feed.xml';
-    const response = await fetch(feedUrl);
-    if (!response.ok) {
-      console.error('Changelog feed fetch failed:', response.status, response.statusText);
-      throw new Error(`Failed to fetch changelog feed: ${response.status} ${response.statusText}`);
-    }
-
-    const xmlText = await response.text();
-    const items = parseChangelogFeed(xmlText);
+    // Fetch only official changelog (docs changes now go to docs API)
+    const officialChangelog = await fetchOfficialChangelog();
 
     // Filter items from the last 90 days for consistency with other dynamic sources
     const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
-    const recentItems = items.filter(item => {
+    const recentItems = officialChangelog.filter(item => {
       const itemDate = parseISO(item.publishedAt);
       return itemDate >= ninetyDaysAgo;
     });
 
+    console.log(`Returning ${recentItems.length} official changelog entries`);
     return NextResponse.json(recentItems);
   } catch (error) {
     console.error('Error fetching changelog entries:', error);
@@ -47,6 +41,23 @@ export async function GET() {
       },
       { status: 500 }
     );
+  }
+}
+
+async function fetchOfficialChangelog(): Promise<ChangelogItem[]> {
+  try {
+    const feedUrl = 'https://sentry.io/changelog/feed.xml';
+    const response = await fetch(feedUrl);
+    if (!response.ok) {
+      console.error('Changelog feed fetch failed:', response.status, response.statusText);
+      return [];
+    }
+
+    const xmlText = await response.text();
+    return parseChangelogFeed(xmlText);
+  } catch (error) {
+    console.error('Error fetching official changelog:', error);
+    return [];
   }
 }
 
