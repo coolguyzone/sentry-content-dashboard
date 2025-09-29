@@ -102,64 +102,35 @@ async function fetchStaticDocs(): Promise<DocsPage[]> {
   }
 }
 
-async function fetchDocsChangelog(): Promise<DocsChangelogEntry[]> {
-  try {
-    // Try to fetch docs changelog from GitHub integration first
-    if (process.env.GITHUB_TOKEN && process.env.OPENAI_API_KEY) {
-      const { getDocsChangelog } = await import('../../utils/githubProcessor');
-      const changelogEntries = await getDocsChangelog();
-      
-      // Transform changelog entries to match docs format
-      const transformedEntries: DocsChangelogEntry[] = changelogEntries.map(entry => ({
-        id: entry.id,
-        title: entry.title,
-        description: entry.description,
-        url: entry.url,
-        publishedAt: entry.publishedAt,
-        source: 'docs' as const,
-        categories: entry.categories,
-        commitId: entry.commitId,
-        author: entry.author,
-        filesChanged: entry.filesChanged,
-        aiSummary: entry.aiSummary,
-        lastModified: entry.publishedAt // Use publishedAt as lastModified for sorting
-      }));
-      
-      console.log('Docs changelog entries found:', transformedEntries.length);
-      return transformedEntries;
-    } else {
-      // Fallback: try to load from local file for testing
-      try {
-        const changelogFile = path.join(process.cwd(), 'data', 'docs-changelog.json');
-        if (fs.existsSync(changelogFile)) {
-          const changelogData = JSON.parse(fs.readFileSync(changelogFile, 'utf8'));
-              const transformedEntries: DocsChangelogEntry[] = changelogData.map((entry: DocsChangelogEntry) => ({
-            id: entry.id,
-            title: entry.title,
-            description: entry.description,
-            url: entry.url,
-            publishedAt: entry.publishedAt,
-            source: 'docs' as const,
-            categories: entry.categories,
-            commitId: entry.commitId,
-            author: entry.author,
-            filesChanged: entry.filesChanged,
-            aiSummary: entry.aiSummary,
-            lastModified: entry.publishedAt
-          }));
-          
-          console.log('Docs changelog entries loaded from file:', transformedEntries.length);
-          return transformedEntries;
-        }
-      } catch (fileError) {
-        console.log('Error loading docs changelog from file:', fileError);
+  async function fetchDocsChangelog(): Promise<DocsChangelogEntry[]> {
+    try {
+      // For now, just load from local file since GitHub integration has module resolution issues
+      const changelogFile = path.join(process.cwd(), 'data', 'docs-changelog.json');
+      if (fs.existsSync(changelogFile)) {
+        const changelogData = JSON.parse(fs.readFileSync(changelogFile, 'utf8'));
+        const transformedEntries: DocsChangelogEntry[] = changelogData.map((entry: DocsChangelogEntry) => ({
+          id: entry.id,
+          title: entry.title,
+          description: entry.description,
+          url: entry.url,
+          publishedAt: entry.publishedAt,
+          source: 'docs' as const,
+          categories: entry.categories,
+          commitId: entry.commitId,
+          author: entry.author,
+          filesChanged: entry.filesChanged,
+          aiSummary: entry.aiSummary,
+          lastModified: entry.publishedAt
+        }));
+
+        console.log('Docs changelog entries loaded from file:', transformedEntries.length);
+        return transformedEntries;
       }
-      
-      console.log('GitHub integration not configured, no docs changelog available');
+
+      console.log('No docs changelog file found');
+      return [];
+    } catch (error) {
+      console.log('Error loading docs changelog:', error);
       return [];
     }
-  } catch (error) {
-    console.log('GitHub integration error (non-fatal):', error);
-    return [];
   }
-}
