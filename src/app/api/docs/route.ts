@@ -29,6 +29,9 @@ interface DocsChangelogEntry {
   lastModified?: string; // Added for sorting consistency
 }
 
+// Unified type for sorting
+type UnifiedDocsItem = DocsPage | DocsChangelogEntry;
+
 export async function GET() {
   try {
     console.log('Docs API request received');
@@ -41,8 +44,19 @@ export async function GET() {
     
     // Combine and sort by date
     const allDocs = [...staticDocs, ...changelogEntries].sort((a, b) => {
-      const dateA = new Date(a.lastModified || a.publishedAt).getTime();
-      const dateB = new Date(b.lastModified || b.publishedAt).getTime();
+      // Helper function to get the date from either type
+      const getDate = (item: UnifiedDocsItem): string => {
+        if ('lastModified' in item && item.lastModified) {
+          return item.lastModified;
+        }
+        if ('publishedAt' in item && item.publishedAt) {
+          return item.publishedAt;
+        }
+        return new Date().toISOString(); // fallback
+      };
+      
+      const dateA = new Date(getDate(a)).getTime();
+      const dateB = new Date(getDate(b)).getTime();
       return dateB - dateA;
     });
     
