@@ -26,6 +26,7 @@ interface DocsChangelogEntry {
     modified: string[];
   };
   aiSummary?: string;
+  lastModified?: string; // Added for sorting consistency
 }
 
 export async function GET() {
