@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
 
     // Process each commit
     for (const commit of payload.commits) {
-      await processDocsChanges(commit, payload.repository);
+      await processDocsChanges(commit);
     }
 
     return NextResponse.json({ 

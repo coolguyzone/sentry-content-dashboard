@@ -52,7 +52,7 @@ interface ChangelogEntry {
 
 const CHANGELOG_FILE = path.join(process.cwd(), 'data', 'docs-changelog.json');
 
-export async function processDocsChanges(commit: Commit, _repository: Repository): Promise<void> {
+export async function processDocsChanges(commit: Commit): Promise<void> {
   try {
     if (!octokit) {
       console.log('GitHub integration not configured, skipping commit processing');
@@ -119,7 +119,7 @@ export async function processDocsChanges(commit: Commit, _repository: Repository
   }
 }
 
-async function generateAISummary(commit: Commit, files: any[]): Promise<string> {
+async function generateAISummary(commit: Commit, files: { filename: string; status: string; additions?: number; deletions?: number; changes?: number; patch?: string }[]): Promise<string> {
   try {
     if (!openai) {
       console.warn('OpenAI API key not configured, using fallback summary');
@@ -127,7 +127,7 @@ async function generateAISummary(commit: Commit, files: any[]): Promise<string> 
     }
 
     // Prepare file changes for AI analysis
-    const fileChanges = files.map((file: any) => ({
+    const fileChanges = files.map((file: { filename: string; status: string; additions?: number; deletions?: number; changes?: number; patch?: string }) => ({
       filename: file.filename,
       status: file.status,
       additions: file.additions,
