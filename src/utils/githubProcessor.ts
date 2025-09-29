@@ -2,37 +2,47 @@ import { writeFile, readFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import path from 'path';
 
-// Conditional imports to handle missing dependencies
-let OctokitClass: typeof import('@octokit/rest').Octokit | null = null;
-let OpenAIClass: typeof import('openai').default | null = null;
+// Lazy imports to handle missing dependencies
+let octokit: any = null;
+let openai: any = null;
 
-try {
-  if (process.env.GITHUB_TOKEN) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { Octokit } = require('@octokit/rest');
-    OctokitClass = Octokit;
+// Initialize GitHub client lazily
+async function getOctokit() {
+  if (octokit) return octokit;
+  
+  if (!process.env.GITHUB_TOKEN) {
+    console.log('GITHUB_TOKEN not configured, GitHub integration disabled');
+    return null;
   }
-} catch {
-  console.log('@octokit/rest not available, GitHub integration disabled');
+
+  try {
+    const { Octokit } = await import('@octokit/rest');
+    octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+    return octokit;
+  } catch (error) {
+    console.log('@octokit/rest not available, GitHub integration disabled');
+    return null;
+  }
 }
 
-try {
-  if (process.env.OPENAI_API_KEY) {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const OpenAI = require('openai').default;
-    OpenAIClass = OpenAI;
+// Initialize OpenAI client lazily
+async function getOpenAI() {
+  if (openai) return openai;
+  
+  if (!process.env.OPENAI_API_KEY) {
+    console.log('OPENAI_API_KEY not configured, AI summaries disabled');
+    return null;
   }
-} catch {
-  console.log('openai not available, AI summaries disabled');
+
+  try {
+    const OpenAI = (await import('openai')).default;
+    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    return openai;
+  } catch (error) {
+    console.log('openai not available, AI summaries disabled');
+    return null;
+  }
 }
-
-const octokit = process.env.GITHUB_TOKEN && OctokitClass ? new OctokitClass({
-  auth: process.env.GITHUB_TOKEN,
-}) : null;
-
-const openai = process.env.OPENAI_API_KEY && OpenAIClass ? new OpenAIClass({
-  apiKey: process.env.OPENAI_API_KEY,
-}) : null;
 
 interface Commit {
   id: string;
@@ -71,7 +81,8 @@ const CHANGELOG_FILE = path.join(process.cwd(), 'data', 'docs-changelog.json');
 
 export async function processDocsChanges(commit: Commit): Promise<void> {
   try {
-    if (!octokit) {
+    const octokitClient = await getOctokit();
+    if (!octokitClient) {
       console.log('GitHub integration not configured, skipping commit processing');
       return;
     }
@@ -79,7 +90,7 @@ export async function processDocsChanges(commit: Commit): Promise<void> {
     console.log(`Processing commit ${commit.id}: ${commit.message}`);
 
     // Get detailed commit information
-    const commitDetails = await octokit.rest.repos.getCommit({
+    const commitDetails = await octokitClient.rest.repos.getCommit({
       owner: 'getsentry',
       repo: 'sentry-docs',
       ref: commit.id,
@@ -138,7 +149,8 @@ export async function processDocsChanges(commit: Commit): Promise<void> {
 
 async function generateAISummary(commit: Commit, files: { filename: string; status: string; additions?: number; deletions?: number; changes?: number; patch?: string }[]): Promise<string> {
   try {
-    if (!openai) {
+    const openaiClient = await getOpenAI();
+    if (!openaiClient) {
       console.warn('OpenAI API key not configured, using fallback summary');
       return `Documentation changes in ${files.length} file(s): ${files.map(f => f.filename).join(', ')}`;
     }
@@ -163,7 +175,7 @@ ${fileChanges.map(f => `- ${f.filename} (${f.status}): +${f.additions} -${f.dele
 
 Please provide a concise summary focusing on what documentation was updated and why it might be important to users.`;
 
-    const completion = await openai.chat.completions.create({
+    const completion = await openaiClient.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         {
