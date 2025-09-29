@@ -30,6 +30,11 @@ export async function POST(request: NextRequest) {
     const signature = request.headers.get('x-hub-signature-256');
     const body = await request.text();
     
+    console.log('Webhook received:');
+    console.log('Signature:', signature);
+    console.log('Body length:', body.length);
+    console.log('Body preview:', body.substring(0, 200) + '...');
+    
     if (!signature) {
       console.error('No signature provided');
       return NextResponse.json({ error: 'No signature provided' }, { status: 401 });
@@ -40,6 +45,10 @@ export async function POST(request: NextRequest) {
     const expectedSignature = createHmac('sha256', process.env.GITHUB_WEBHOOK_SECRET || '')
       .update(body)
       .digest('hex');
+    
+    console.log('Provided signature:', providedSignature);
+    console.log('Expected signature:', expectedSignature);
+    console.log('Webhook secret length:', (process.env.GITHUB_WEBHOOK_SECRET || '').length);
     
     if (expectedSignature !== providedSignature) {
       console.error('Invalid signature');
