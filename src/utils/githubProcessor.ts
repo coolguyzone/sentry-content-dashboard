@@ -1,14 +1,34 @@
-import { Octokit } from '@octokit/rest';
-import OpenAI from 'openai';
 import { writeFile, readFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import path from 'path';
 
-const octokit = process.env.GITHUB_TOKEN ? new Octokit({
+// Conditional imports to handle missing dependencies
+let Octokit: any = null;
+let OpenAI: any = null;
+
+try {
+  if (process.env.GITHUB_TOKEN) {
+    const { Octokit: OctokitClass } = require('@octokit/rest');
+    Octokit = OctokitClass;
+  }
+} catch (error) {
+  console.log('@octokit/rest not available, GitHub integration disabled');
+}
+
+try {
+  if (process.env.OPENAI_API_KEY) {
+    const OpenAIClass = require('openai').default;
+    OpenAI = OpenAIClass;
+  }
+} catch (error) {
+  console.log('openai not available, AI summaries disabled');
+}
+
+const octokit = process.env.GITHUB_TOKEN && Octokit ? new Octokit({
   auth: process.env.GITHUB_TOKEN,
 }) : null;
 
-const openai = process.env.OPENAI_API_KEY ? new OpenAI({
+const openai = process.env.OPENAI_API_KEY && OpenAI ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 }) : null;
 
