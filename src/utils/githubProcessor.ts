@@ -3,7 +3,9 @@ import { existsSync } from 'fs';
 import path from 'path';
 
 // Lazy imports to handle missing dependencies
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let octokit: any = null;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let openai: any = null;
 
 // Initialize GitHub client lazily
@@ -19,7 +21,7 @@ async function getOctokit() {
     const { Octokit } = await import('@octokit/rest');
     octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
     return octokit;
-  } catch (error) {
+  } catch {
     console.log('@octokit/rest not available, GitHub integration disabled');
     return null;
   }
@@ -38,7 +40,7 @@ async function getOpenAI() {
     const OpenAI = (await import('openai')).default;
     openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     return openai;
-  } catch (error) {
+  } catch {
     console.log('openai not available, AI summaries disabled');
     return null;
   }
