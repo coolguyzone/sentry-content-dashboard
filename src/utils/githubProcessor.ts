@@ -99,7 +99,7 @@ export async function processDocsChanges(commit: Commit): Promise<void> {
     });
 
     // Filter for documentation files only
-    const docFiles = commitDetails.data.files?.filter(file => 
+    const docFiles = commitDetails.data.files?.filter((file: { filename: string }) => 
       file.filename.endsWith('.md') || 
       file.filename.endsWith('.mdx') ||
       file.filename.includes('/docs/') ||
