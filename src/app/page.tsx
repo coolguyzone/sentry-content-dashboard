@@ -82,23 +82,11 @@ export default function Home() {
 
       const blogPosts = blogResponse.data || [];
       const youtubeVideos = youtubeResponse.data || [];
-      const docsPages = docsResponse.data || [];
+      const docsItems = (docsResponse.data || []) as ContentItem[];
       const changelogItems = (changelogResponse.data || []) as ContentItem[];
 
-      // Transform docs pages to match content item format
-      const transformedDocs = docsPages.map((page: DocsPage) => ({
-        id: `docs-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-        title: page.title,
-        description: page.description,
-        url: page.url,
-        publishedAt: page.lastModified || page.lastModified,
-        source: 'docs' as const,
-        lastModified: page.lastModified,
-        categories: ['technical'] // Docs are typically technical
-      }));
-
       // Combine and sort by publication date
-      const allContent = [...blogPosts, ...youtubeVideos, ...transformedDocs, ...changelogItems].sort((a, b) => 
+      const allContent = [...blogPosts, ...youtubeVideos, ...docsItems, ...changelogItems].sort((a, b) => 
         new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
       );
 

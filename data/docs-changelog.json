@@ -1,5 +1,191 @@
 [
   {
+    "id": "docs-b8323f64836885ae9e7d723fcc9da3cf2df1d424",
+    "title": "Docs Update: Clarify deletion options for Error Issues (#15143)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/product/issues/states-triage/index.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/b8323f64836885ae9e7d723fcc9da3cf2df1d424",
+    "publishedAt": "2025-10-06T15:13:36Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "b8323f64836885ae9e7d723fcc9da3cf2df1d424",
+    "author": "Armen Zambrano G.",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/product/issues/states-triage/index.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/product/issues/states-triage/index.mdx"
+  },
+  {
+    "id": "docs-6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
+    "title": "Docs Update: docs(self-hosted): reference architectures (#13893)",
+    "description": "Documentation changes in 3 file(s), 3 added. Files: develop-docs/self-hosted/reference-architecture/index.mdx, develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx, develop-docs/self-hosted/reference-architecture/simple-single-box.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
+    "publishedAt": "2025-10-06T14:49:14Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
+    "author": "Reinaldy Rafli",
+    "filesChanged": {
+      "added": [
+        "develop-docs/self-hosted/reference-architecture/index.mdx",
+        "develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx",
+        "develop-docs/self-hosted/reference-architecture/simple-single-box.mdx"
+      ],
+      "removed": [],
+      "modified": []
+    },
+    "aiSummary": "Documentation changes in 3 file(s), 3 added. Files: develop-docs/self-hosted/reference-architecture/index.mdx, develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx, develop-docs/self-hosted/reference-architecture/simple-single-box.mdx"
+  },
+  {
+    "id": "docs-306f612da19e247cf2512d37083be2ff18447575",
+    "title": "Docs Update: Update noProxy list in index.mdx (#15122)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/self-hosted/index.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/306f612da19e247cf2512d37083be2ff18447575",
+    "publishedAt": "2025-10-06T14:40:05Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "306f612da19e247cf2512d37083be2ff18447575",
+    "author": "Wouter Claeys",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "develop-docs/self-hosted/index.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/self-hosted/index.mdx"
+  },
+  {
+    "id": "docs-f2bd60cd564ff0246203c9aff75a8837e6a41e30",
+    "title": "Docs Update: docs: Remove generic references from Go (#15079)",
+    "description": "Documentation changes in 9 file(s), 9 modified. Files: docs/platforms/go/common/configuration/draining.mdx, docs/platforms/go/common/configuration/filtering.mdx, docs/platforms/go/common/configuration/sampling.mdx, docs/platforms/go/common/data-management/sensitive-data/index.mdx, docs/platforms/...",
+    "url": "https://github.com/getsentry/sentry-docs/commit/f2bd60cd564ff0246203c9aff75a8837e6a41e30",
+    "publishedAt": "2025-10-06T13:56:13Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "f2bd60cd564ff0246203c9aff75a8837e6a41e30",
+    "author": "Alex Alderman Webb",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/go/common/configuration/draining.mdx",
+        "docs/platforms/go/common/configuration/filtering.mdx",
+        "docs/platforms/go/common/configuration/sampling.mdx",
+        "docs/platforms/go/common/data-management/sensitive-data/index.mdx",
+        "docs/platforms/go/common/enriching-events/breadcrumbs/index.mdx",
+        "docs/platforms/go/common/enriching-events/context/index.mdx",
+        "docs/platforms/go/common/enriching-events/identify-user/index.mdx",
+        "docs/platforms/go/common/enriching-events/scopes/index.mdx",
+        "docs/platforms/go/common/usage/sdk-fingerprinting/index.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 9 file(s), 9 modified. Files: docs/platforms/go/common/configuration/draining.mdx, docs/platforms/go/common/configuration/filtering.mdx, docs/platforms/go/common/configuration/sampling.mdx, docs/platforms/go/common/data-management/sensitive-data/index.mdx, docs/platforms/..."
+  },
+  {
+    "id": "docs-98576424985863006572cfce18099b26b5c60acc",
+    "title": "Docs Update: feat(python): Document trace_ignore_status_codes option (#15096)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/configuration/options.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/98576424985863006572cfce18099b26b5c60acc",
+    "publishedAt": "2025-10-06T11:51:28Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "98576424985863006572cfce18099b26b5c60acc",
+    "author": "Alex Alderman Webb",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/python/configuration/options.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/configuration/options.mdx"
+  },
+  {
+    "id": "docs-eac5c3b92d6c30867cea39326cbe03119c0c7018",
+    "title": "Docs Update: RN: Fix Configure Automatic Source Maps Upload script for RN 0.81.1 (#15140)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/manual-setup.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/eac5c3b92d6c30867cea39326cbe03119c0c7018",
+    "publishedAt": "2025-10-06T11:02:41Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "eac5c3b92d6c30867cea39326cbe03119c0c7018",
+    "author": "Antonis Lilis",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/react-native/manual-setup/manual-setup.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/manual-setup.mdx"
+  },
+  {
+    "id": "docs-3ff6cea7fc4896261e9cb17180e6931cb4345782",
+    "title": "Docs Update: RN: Update Codepush instructions to use a separate dir for sourcemaps (#15141)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/sourcemaps/uploading/codepush.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/3ff6cea7fc4896261e9cb17180e6931cb4345782",
+    "publishedAt": "2025-10-06T11:02:07Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "3ff6cea7fc4896261e9cb17180e6931cb4345782",
+    "author": "Antonis Lilis",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/react-native/sourcemaps/uploading/codepush.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/sourcemaps/uploading/codepush.mdx"
+  },
+  {
+    "id": "docs-1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
+    "title": "Docs Update: fix(pii-scrubbing): Fix up sentence structure (#15125)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
+    "publishedAt": "2025-10-06T06:52:58Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
+    "author": "Tobias Wilfert",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx"
+  },
+  {
     "id": "docs-9cc716082b2076e29f7d1d809446a540940a7e4f",
     "title": "Docs Update: Documented backpressure handling option for .NET (#15106)",
     "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/dotnet/common/configuration/options.mdx",
@@ -42,193 +228,5 @@
       ]
     },
     "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/concepts/otlp/index.mdx"
-  },
-  {
-    "id": "docs-d761769a7fc7047960aee3cf808eb14c9a65918e",
-    "title": "Docs Update: ref(rust): Align docs with core SDK features (#15078)",
-    "description": "Documentation changes in 10 file(s), 10 modified. Files: docs/platforms/rust/common/configuration/draining.mdx, docs/platforms/rust/common/configuration/filtering.mdx, docs/platforms/rust/common/configuration/options.mdx, docs/platforms/rust/common/configuration/releases.mdx, docs/platforms/rust/...",
-    "url": "https://github.com/getsentry/sentry-docs/commit/d761769a7fc7047960aee3cf808eb14c9a65918e",
-    "publishedAt": "2025-10-03T16:08:08Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "d761769a7fc7047960aee3cf808eb14c9a65918e",
-    "author": "Alex Alderman Webb",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/rust/common/configuration/draining.mdx",
-        "docs/platforms/rust/common/configuration/filtering.mdx",
-        "docs/platforms/rust/common/configuration/options.mdx",
-        "docs/platforms/rust/common/configuration/releases.mdx",
-        "docs/platforms/rust/common/data-management/sensitive-data/index.mdx",
-        "docs/platforms/rust/common/enriching-events/breadcrumbs/index.mdx",
-        "docs/platforms/rust/common/enriching-events/context/index.mdx",
-        "docs/platforms/rust/common/enriching-events/identify-user/index.mdx",
-        "docs/platforms/rust/common/enriching-events/scopes/index.mdx",
-        "docs/platforms/rust/common/usage/index.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 10 file(s), 10 modified. Files: docs/platforms/rust/common/configuration/draining.mdx, docs/platforms/rust/common/configuration/filtering.mdx, docs/platforms/rust/common/configuration/options.mdx, docs/platforms/rust/common/configuration/releases.mdx, docs/platforms/rust/..."
-  },
-  {
-    "id": "docs-e7ead2fab730d5198d7c1967a45df8ec2c29f817",
-    "title": "Docs Update: feat(apple): Add FAQ to app hang rate (#15111)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/apple/common/configuration/app-hangs.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/e7ead2fab730d5198d7c1967a45df8ec2c29f817",
-    "publishedAt": "2025-10-03T15:14:44Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "e7ead2fab730d5198d7c1967a45df8ec2c29f817",
-    "author": "Philipp Hofmann",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/apple/common/configuration/app-hangs.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/apple/common/configuration/app-hangs.mdx"
-  },
-  {
-    "id": "docs-33c8c7761d44747476e3061eabe24a5f8e019848",
-    "title": "Docs Update: feat(python): add docs for LiteLLM integration (#15091)",
-    "description": "Documentation changes in 3 file(s), 1 added, 2 modified. Files: docs/platforms/python/integrations/index.mdx, docs/platforms/python/integrations/litellm/index.mdx, docs/platforms/python/tracing/instrumentation/custom-instrumentation/ai-agents-module.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/33c8c7761d44747476e3061eabe24a5f8e019848",
-    "publishedAt": "2025-10-03T13:30:33Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "33c8c7761d44747476e3061eabe24a5f8e019848",
-    "author": "Fabian Schindler",
-    "filesChanged": {
-      "added": [
-        "docs/platforms/python/integrations/litellm/index.mdx"
-      ],
-      "removed": [],
-      "modified": [
-        "docs/platforms/python/integrations/index.mdx",
-        "docs/platforms/python/tracing/instrumentation/custom-instrumentation/ai-agents-module.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 3 file(s), 1 added, 2 modified. Files: docs/platforms/python/integrations/index.mdx, docs/platforms/python/integrations/litellm/index.mdx, docs/platforms/python/tracing/instrumentation/custom-instrumentation/ai-agents-module.mdx"
-  },
-  {
-    "id": "docs-2d4434c631798a54a29284ccdce792f36070ec54",
-    "title": "Docs Update: docs(nuxt): use correct module path in a snippet (#15033)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: platform-includes/getting-started-complete/javascript.nuxt.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/2d4434c631798a54a29284ccdce792f36070ec54",
-    "publishedAt": "2025-10-03T12:27:17Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "2d4434c631798a54a29284ccdce792f36070ec54",
-    "author": "Abdelrahman Awad",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "platform-includes/getting-started-complete/javascript.nuxt.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: platform-includes/getting-started-complete/javascript.nuxt.mdx"
-  },
-  {
-    "id": "docs-feff2c84c57272370c82a84b22fdccb8afbdd025",
-    "title": "Docs Update: Ref(Expo): Update Expo Getting Started docs. (#14936)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/expo.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/feff2c84c57272370c82a84b22fdccb8afbdd025",
-    "publishedAt": "2025-10-03T12:00:07Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "feff2c84c57272370c82a84b22fdccb8afbdd025",
-    "author": "LucasZF",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/react-native/manual-setup/expo.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/expo.mdx"
-  },
-  {
-    "id": "docs-89d683babd26799aefc31be386af2d4317e4cd0c",
-    "title": "Docs Update: feat(platform): Bump platformicons & add langgraph platform (#15112)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/integrations/index.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/89d683babd26799aefc31be386af2d4317e4cd0c",
-    "publishedAt": "2025-10-03T07:08:10Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "89d683babd26799aefc31be386af2d4317e4cd0c",
-    "author": "Simon Hellmayr",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/python/integrations/index.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/integrations/index.mdx"
-  },
-  {
-    "id": "docs-fdca3049728711c338a3db6e3bdb830e3dd8aa53",
-    "title": "Docs Update: feat(docs): Update dev docs around CI (#15119)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/development-infrastructure/continuous-integration.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/fdca3049728711c338a3db6e3bdb830e3dd8aa53",
-    "publishedAt": "2025-10-02T22:27:39Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "fdca3049728711c338a3db6e3bdb830e3dd8aa53",
-    "author": "Hubert Deng",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "develop-docs/development-infrastructure/continuous-integration.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/development-infrastructure/continuous-integration.mdx"
-  },
-  {
-    "id": "docs-fb3d2a4158d84b81a09ed41b3b33098165d2870d",
-    "title": "Docs Update: Update Component Library doc (#15117)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/frontend/component-library.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/fb3d2a4158d84b81a09ed41b3b33098165d2870d",
-    "publishedAt": "2025-10-02T22:13:29Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "fb3d2a4158d84b81a09ed41b3b33098165d2870d",
-    "author": "Nate Moore",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "develop-docs/frontend/component-library.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/frontend/component-library.mdx"
   }
 ]
