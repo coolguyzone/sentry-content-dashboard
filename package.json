@@ -11,7 +11,8 @@
     "setup-github": "node scripts/setup-github-webhook.js",
     "setup-github-actions": "node scripts/setup-github-actions.js",
     "test-github": "node scripts/test-github-integration.js",
-    "poll-github": "node scripts/poll-github.js"
+    "poll-github": "node scripts/poll-github.js",
+    "seed-docs": "node scripts/seed-docs-changelog.js"
   },
   "dependencies": {
     "@octokit/rest": "^20.0.2",

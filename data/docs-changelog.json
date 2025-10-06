@@ -1,36 +1,234 @@
 [
   {
-    "id": "docs-abc123",
-    "title": "Docs Update: Improved authentication guide",
-    "description": "Updated authentication documentation with new OAuth flow examples and improved error handling guides. Added troubleshooting section for common authentication issues.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/abc123",
-    "publishedAt": "2024-01-15T10:30:00Z",
-    "source": "changelog",
-    "categories": ["technical", "documentation"],
-    "commitId": "abc123",
-    "author": "John Doe",
+    "id": "docs-9cc716082b2076e29f7d1d809446a540940a7e4f",
+    "title": "Docs Update: Documented backpressure handling option for .NET (#15106)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/dotnet/common/configuration/options.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/9cc716082b2076e29f7d1d809446a540940a7e4f",
+    "publishedAt": "2025-10-05T23:57:10Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "9cc716082b2076e29f7d1d809446a540940a7e4f",
+    "author": "James Crosswell",
     "filesChanged": {
-      "added": ["docs/auth/oauth.md"],
+      "added": [],
       "removed": [],
-      "modified": ["docs/auth/index.md", "docs/auth/troubleshooting.md"]
+      "modified": [
+        "docs/platforms/dotnet/common/configuration/options.mdx"
+      ]
     },
-    "aiSummary": "Enhanced authentication documentation with comprehensive OAuth examples and troubleshooting guidance."
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/dotnet/common/configuration/options.mdx"
   },
   {
-    "id": "docs-def456",
-    "title": "Docs Update: New SDK installation guide",
-    "description": "Added detailed installation instructions for the new React Native SDK with step-by-step setup and configuration examples.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/def456",
-    "publishedAt": "2024-01-14T14:20:00Z",
-    "source": "changelog",
-    "categories": ["technical", "documentation"],
-    "commitId": "def456",
-    "author": "Jane Smith",
+    "id": "docs-693f809baa21171545b6bc82d7665d7f3ed49937",
+    "title": "Docs Update: feat: Add example collector config to otlp docs + extra cleanup (#15128)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/concepts/otlp/index.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/693f809baa21171545b6bc82d7665d7f3ed49937",
+    "publishedAt": "2025-10-03T19:55:55Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "693f809baa21171545b6bc82d7665d7f3ed49937",
+    "author": "Abhijeet Prasad",
     "filesChanged": {
-      "added": ["docs/installation/react-native.md"],
+      "added": [],
       "removed": [],
-      "modified": ["docs/installation/index.md"]
+      "modified": [
+        "docs/concepts/otlp/index.mdx"
+      ]
     },
-    "aiSummary": "Comprehensive React Native SDK installation guide with clear setup instructions and configuration examples."
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/concepts/otlp/index.mdx"
+  },
+  {
+    "id": "docs-d761769a7fc7047960aee3cf808eb14c9a65918e",
+    "title": "Docs Update: ref(rust): Align docs with core SDK features (#15078)",
+    "description": "Documentation changes in 10 file(s), 10 modified. Files: docs/platforms/rust/common/configuration/draining.mdx, docs/platforms/rust/common/configuration/filtering.mdx, docs/platforms/rust/common/configuration/options.mdx, docs/platforms/rust/common/configuration/releases.mdx, docs/platforms/rust/...",
+    "url": "https://github.com/getsentry/sentry-docs/commit/d761769a7fc7047960aee3cf808eb14c9a65918e",
+    "publishedAt": "2025-10-03T16:08:08Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "d761769a7fc7047960aee3cf808eb14c9a65918e",
+    "author": "Alex Alderman Webb",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/rust/common/configuration/draining.mdx",
+        "docs/platforms/rust/common/configuration/filtering.mdx",
+        "docs/platforms/rust/common/configuration/options.mdx",
+        "docs/platforms/rust/common/configuration/releases.mdx",
+        "docs/platforms/rust/common/data-management/sensitive-data/index.mdx",
+        "docs/platforms/rust/common/enriching-events/breadcrumbs/index.mdx",
+        "docs/platforms/rust/common/enriching-events/context/index.mdx",
+        "docs/platforms/rust/common/enriching-events/identify-user/index.mdx",
+        "docs/platforms/rust/common/enriching-events/scopes/index.mdx",
+        "docs/platforms/rust/common/usage/index.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 10 file(s), 10 modified. Files: docs/platforms/rust/common/configuration/draining.mdx, docs/platforms/rust/common/configuration/filtering.mdx, docs/platforms/rust/common/configuration/options.mdx, docs/platforms/rust/common/configuration/releases.mdx, docs/platforms/rust/..."
+  },
+  {
+    "id": "docs-e7ead2fab730d5198d7c1967a45df8ec2c29f817",
+    "title": "Docs Update: feat(apple): Add FAQ to app hang rate (#15111)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/apple/common/configuration/app-hangs.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/e7ead2fab730d5198d7c1967a45df8ec2c29f817",
+    "publishedAt": "2025-10-03T15:14:44Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "e7ead2fab730d5198d7c1967a45df8ec2c29f817",
+    "author": "Philipp Hofmann",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/apple/common/configuration/app-hangs.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/apple/common/configuration/app-hangs.mdx"
+  },
+  {
+    "id": "docs-33c8c7761d44747476e3061eabe24a5f8e019848",
+    "title": "Docs Update: feat(python): add docs for LiteLLM integration (#15091)",
+    "description": "Documentation changes in 3 file(s), 1 added, 2 modified. Files: docs/platforms/python/integrations/index.mdx, docs/platforms/python/integrations/litellm/index.mdx, docs/platforms/python/tracing/instrumentation/custom-instrumentation/ai-agents-module.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/33c8c7761d44747476e3061eabe24a5f8e019848",
+    "publishedAt": "2025-10-03T13:30:33Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "33c8c7761d44747476e3061eabe24a5f8e019848",
+    "author": "Fabian Schindler",
+    "filesChanged": {
+      "added": [
+        "docs/platforms/python/integrations/litellm/index.mdx"
+      ],
+      "removed": [],
+      "modified": [
+        "docs/platforms/python/integrations/index.mdx",
+        "docs/platforms/python/tracing/instrumentation/custom-instrumentation/ai-agents-module.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 3 file(s), 1 added, 2 modified. Files: docs/platforms/python/integrations/index.mdx, docs/platforms/python/integrations/litellm/index.mdx, docs/platforms/python/tracing/instrumentation/custom-instrumentation/ai-agents-module.mdx"
+  },
+  {
+    "id": "docs-2d4434c631798a54a29284ccdce792f36070ec54",
+    "title": "Docs Update: docs(nuxt): use correct module path in a snippet (#15033)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: platform-includes/getting-started-complete/javascript.nuxt.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/2d4434c631798a54a29284ccdce792f36070ec54",
+    "publishedAt": "2025-10-03T12:27:17Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "2d4434c631798a54a29284ccdce792f36070ec54",
+    "author": "Abdelrahman Awad",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "platform-includes/getting-started-complete/javascript.nuxt.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: platform-includes/getting-started-complete/javascript.nuxt.mdx"
+  },
+  {
+    "id": "docs-feff2c84c57272370c82a84b22fdccb8afbdd025",
+    "title": "Docs Update: Ref(Expo): Update Expo Getting Started docs. (#14936)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/expo.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/feff2c84c57272370c82a84b22fdccb8afbdd025",
+    "publishedAt": "2025-10-03T12:00:07Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "feff2c84c57272370c82a84b22fdccb8afbdd025",
+    "author": "LucasZF",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/react-native/manual-setup/expo.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/expo.mdx"
+  },
+  {
+    "id": "docs-89d683babd26799aefc31be386af2d4317e4cd0c",
+    "title": "Docs Update: feat(platform): Bump platformicons & add langgraph platform (#15112)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/integrations/index.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/89d683babd26799aefc31be386af2d4317e4cd0c",
+    "publishedAt": "2025-10-03T07:08:10Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "89d683babd26799aefc31be386af2d4317e4cd0c",
+    "author": "Simon Hellmayr",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/python/integrations/index.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/integrations/index.mdx"
+  },
+  {
+    "id": "docs-fdca3049728711c338a3db6e3bdb830e3dd8aa53",
+    "title": "Docs Update: feat(docs): Update dev docs around CI (#15119)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/development-infrastructure/continuous-integration.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/fdca3049728711c338a3db6e3bdb830e3dd8aa53",
+    "publishedAt": "2025-10-02T22:27:39Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "fdca3049728711c338a3db6e3bdb830e3dd8aa53",
+    "author": "Hubert Deng",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "develop-docs/development-infrastructure/continuous-integration.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/development-infrastructure/continuous-integration.mdx"
+  },
+  {
+    "id": "docs-fb3d2a4158d84b81a09ed41b3b33098165d2870d",
+    "title": "Docs Update: Update Component Library doc (#15117)",
+    "description": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/frontend/component-library.mdx",
+    "url": "https://github.com/getsentry/sentry-docs/commit/fb3d2a4158d84b81a09ed41b3b33098165d2870d",
+    "publishedAt": "2025-10-02T22:13:29Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "fb3d2a4158d84b81a09ed41b3b33098165d2870d",
+    "author": "Nate Moore",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "develop-docs/frontend/component-library.mdx"
+      ]
+    },
+    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/frontend/component-library.mdx"
   }
 ]

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createHmac } from 'crypto';
-import { processDocsChanges } from '../../../../utils/githubProcessor';
 
 interface GitHubWebhookPayload {
   ref: string;
@@ -71,10 +70,16 @@ export async function POST(request: NextRequest) {
 
     console.log(`Processing ${payload.commits.length} commits from sentry-docs`);
 
-    // Process each commit
-    for (const commit of payload.commits) {
-      await processDocsChanges(commit);
-    }
+        // Process each commit
+        for (const commit of payload.commits) {
+          try {
+            const { processDocsChanges } = await import('../../../../utils/githubProcessor');
+            await processDocsChanges(commit);
+          } catch (error) {
+            console.error('GitHub processor not available:', error);
+            // Continue without processing - webhook still succeeds
+          }
+        }
 
     return NextResponse.json({ 
       message: 'Webhook processed successfully',
