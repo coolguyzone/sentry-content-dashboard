@@ -166,31 +166,27 @@ async function generateAISummary(commit: Commit, files: { filename: string; stat
       changes: file.changes,
     }));
 
-    const prompt = `Analyze these documentation changes from the Sentry docs repository and provide a brief, user-friendly summary (2-3 sentences max):
+    const prompt = `Summarize this Sentry docs change in ONE sentence (max 168 characters). Be specific and focus on what changed:
 
-Commit Message: ${commit.message}
-Files Changed: ${fileChanges.length}
-Author: ${commit.author.name}
+Commit: ${commit.message}
+Files: ${fileChanges.map(f => f.filename.split('/').pop()).join(', ')}
 
-File Details:
-${fileChanges.map(f => `- ${f.filename} (${f.status}): +${f.additions} -${f.deletions} lines`).join('\n')}
-
-Please provide a concise summary focusing on what documentation was updated and why it might be important to users.`;
+Keep it brief, clear, and actionable.`;
 
     const completion = await openaiClient.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content: "You are a technical writer who creates clear, concise summaries of documentation changes. Focus on user impact and key improvements."
+          content: "You are a technical writer. Create ultra-concise, single-sentence summaries under 168 characters. No fluff, just facts about what changed and why."
         },
         {
           role: "user",
           content: prompt
         }
       ],
-      max_tokens: 200,
-      temperature: 0.3,
+      max_tokens: 80,
+      temperature: 0.2,
     });
 
     return completion.choices[0]?.message?.content || 'Documentation updated with various improvements.';
