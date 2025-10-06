@@ -2,7 +2,7 @@
   {
     "id": "docs-b8323f64836885ae9e7d723fcc9da3cf2df1d424",
     "title": "Docs Update: Clarify deletion options for Error Issues (#15143)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/product/issues/states-triage/index.mdx",
+    "description": "Summary: The documentation update clarified the options for deleting platform issues in Sentry. Users can now easily understand the deletion process for error issues, providing clearer guidance on managing their projects effectively.",
     "url": "https://github.com/getsentry/sentry-docs/commit/b8323f64836885ae9e7d723fcc9da3cf2df1d424",
     "publishedAt": "2025-10-06T15:13:36Z",
     "source": "docs",
@@ -19,12 +19,12 @@
         "docs/product/issues/states-triage/index.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/product/issues/states-triage/index.mdx"
+    "aiSummary": "Summary: The documentation update clarified the options for deleting platform issues in Sentry. Users can now easily understand the deletion process for error issues, providing clearer guidance on managing their projects effectively."
   },
   {
     "id": "docs-6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
     "title": "Docs Update: docs(self-hosted): reference architectures (#13893)",
-    "description": "Documentation changes in 3 file(s), 3 added. Files: develop-docs/self-hosted/reference-architecture/index.mdx, develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx, develop-docs/self-hosted/reference-architecture/simple-single-box.mdx",
+    "description": "The documentation changes added new reference architecture guides for self-hosted Sentry setups, including separate ingest box and simple single-box configurations. These additions can help users better understand and implement different deployment options, potentially improving their Sentry setup's performance and scalability.",
     "url": "https://github.com/getsentry/sentry-docs/commit/6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
     "publishedAt": "2025-10-06T14:49:14Z",
     "source": "docs",
@@ -43,12 +43,12 @@
       "removed": [],
       "modified": []
     },
-    "aiSummary": "Documentation changes in 3 file(s), 3 added. Files: develop-docs/self-hosted/reference-architecture/index.mdx, develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx, develop-docs/self-hosted/reference-architecture/simple-single-box.mdx"
+    "aiSummary": "The documentation changes added new reference architecture guides for self-hosted Sentry setups, including separate ingest box and simple single-box configurations. These additions can help users better understand and implement different deployment options, potentially improving their Sentry setup's performance and scalability."
   },
   {
     "id": "docs-306f612da19e247cf2512d37083be2ff18447575",
     "title": "Docs Update: Update noProxy list in index.mdx (#15122)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/self-hosted/index.mdx",
+    "description": "In the Sentry docs repository, the noProxy list in the index.mdx file was updated to include pgbouncer and seaweedfs in version 25.9.0. This change is important for users as it ensures that these services are excluded from proxying, potentially improving the performance and reliability of Sentry's self-hosted setup.",
     "url": "https://github.com/getsentry/sentry-docs/commit/306f612da19e247cf2512d37083be2ff18447575",
     "publishedAt": "2025-10-06T14:40:05Z",
     "source": "docs",
@@ -65,12 +65,12 @@
         "develop-docs/self-hosted/index.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: develop-docs/self-hosted/index.mdx"
+    "aiSummary": "In the Sentry docs repository, the noProxy list in the index.mdx file was updated to include pgbouncer and seaweedfs in version 25.9.0. This change is important for users as it ensures that these services are excluded from proxying, potentially improving the performance and reliability of Sentry's self-hosted setup."
   },
   {
     "id": "docs-f2bd60cd564ff0246203c9aff75a8837e6a41e30",
     "title": "Docs Update: docs: Remove generic references from Go (#15079)",
-    "description": "Documentation changes in 9 file(s), 9 modified. Files: docs/platforms/go/common/configuration/draining.mdx, docs/platforms/go/common/configuration/filtering.mdx, docs/platforms/go/common/configuration/sampling.mdx, docs/platforms/go/common/data-management/sensitive-data/index.mdx, docs/platforms/...",
+    "description": "The recent documentation changes in the Go SDK docs removed generic and plural references to SDKs, making the content more specific and tailored to the Go SDK. This update enhances clarity and ensures that users can easily understand and apply the information provided in the documentation for the Go SDK.",
     "url": "https://github.com/getsentry/sentry-docs/commit/f2bd60cd564ff0246203c9aff75a8837e6a41e30",
     "publishedAt": "2025-10-06T13:56:13Z",
     "source": "docs",
@@ -95,12 +95,12 @@
         "docs/platforms/go/common/usage/sdk-fingerprinting/index.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 9 file(s), 9 modified. Files: docs/platforms/go/common/configuration/draining.mdx, docs/platforms/go/common/configuration/filtering.mdx, docs/platforms/go/common/configuration/sampling.mdx, docs/platforms/go/common/data-management/sensitive-data/index.mdx, docs/platforms/..."
+    "aiSummary": "The recent documentation changes in the Go SDK docs removed generic and plural references to SDKs, making the content more specific and tailored to the Go SDK. This update enhances clarity and ensures that users can easily understand and apply the information provided in the documentation for the Go SDK."
   },
   {
     "id": "docs-98576424985863006572cfce18099b26b5c60acc",
     "title": "Docs Update: feat(python): Document trace_ignore_status_codes option (#15096)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/configuration/options.mdx",
+    "description": "The documentation change in this commit adds information about the `trace_ignore_status_codes` option in the Python configuration for Sentry. This update is valuable for users as it clarifies how to configure Sentry to ignore specific HTTP status codes when capturing traces, potentially improving the accuracy and relevance of performance monitoring data.",
     "url": "https://github.com/getsentry/sentry-docs/commit/98576424985863006572cfce18099b26b5c60acc",
     "publishedAt": "2025-10-06T11:51:28Z",
     "source": "docs",
@@ -117,12 +117,12 @@
         "docs/platforms/python/configuration/options.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/python/configuration/options.mdx"
+    "aiSummary": "The documentation change in this commit adds information about the `trace_ignore_status_codes` option in the Python configuration for Sentry. This update is valuable for users as it clarifies how to configure Sentry to ignore specific HTTP status codes when capturing traces, potentially improving the accuracy and relevance of performance monitoring data."
   },
   {
     "id": "docs-eac5c3b92d6c30867cea39326cbe03119c0c7018",
     "title": "Docs Update: RN: Fix Configure Automatic Source Maps Upload script for RN 0.81.1 (#15140)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/manual-setup.mdx",
+    "description": "This documentation update fixes the script for uploading iOS source maps for React Native 0.81.1+ in Sentry. It also sets the newer version as the default, ensuring users can seamlessly configure automatic source maps upload for their React Native projects.",
     "url": "https://github.com/getsentry/sentry-docs/commit/eac5c3b92d6c30867cea39326cbe03119c0c7018",
     "publishedAt": "2025-10-06T11:02:41Z",
     "source": "docs",
@@ -139,12 +139,12 @@
         "docs/platforms/react-native/manual-setup/manual-setup.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/manual-setup.mdx"
+    "aiSummary": "This documentation update fixes the script for uploading iOS source maps for React Native 0.81.1+ in Sentry. It also sets the newer version as the default, ensuring users can seamlessly configure automatic source maps upload for their React Native projects."
   },
   {
     "id": "docs-3ff6cea7fc4896261e9cb17180e6931cb4345782",
     "title": "Docs Update: RN: Update Codepush instructions to use a separate dir for sourcemaps (#15141)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/sourcemaps/uploading/codepush.mdx",
+    "description": "This documentation update in the Sentry repository modifies the Codepush instructions for React Native to use a separate directory for sourcemaps. This change is crucial as it helps prevent including sourcemaps in releases, ensuring a cleaner and more efficient deployment process for users.",
     "url": "https://github.com/getsentry/sentry-docs/commit/3ff6cea7fc4896261e9cb17180e6931cb4345782",
     "publishedAt": "2025-10-06T11:02:07Z",
     "source": "docs",
@@ -161,12 +161,12 @@
         "docs/platforms/react-native/sourcemaps/uploading/codepush.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/sourcemaps/uploading/codepush.mdx"
+    "aiSummary": "This documentation update in the Sentry repository modifies the Codepush instructions for React Native to use a separate directory for sourcemaps. This change is crucial as it helps prevent including sourcemaps in releases, ensuring a cleaner and more efficient deployment process for users."
   },
   {
     "id": "docs-1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
     "title": "Docs Update: fix(pii-scrubbing): Fix up sentence structure (#15125)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx",
+    "description": "This documentation change fixed a sentence structure in the server-side scrubbing section of the PII scrubbing documentation. Users can now benefit from clearer and more understandable information on how to handle sensitive data securely.",
     "url": "https://github.com/getsentry/sentry-docs/commit/1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
     "publishedAt": "2025-10-06T06:52:58Z",
     "source": "docs",
@@ -183,7 +183,7 @@
         "docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx"
+    "aiSummary": "This documentation change fixed a sentence structure in the server-side scrubbing section of the PII scrubbing documentation. Users can now benefit from clearer and more understandable information on how to handle sensitive data securely."
   },
   {
     "id": "docs-9cc716082b2076e29f7d1d809446a540940a7e4f",
@@ -210,7 +210,7 @@
   {
     "id": "docs-693f809baa21171545b6bc82d7665d7f3ed49937",
     "title": "Docs Update: feat: Add example collector config to otlp docs + extra cleanup (#15128)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/concepts/otlp/index.mdx",
+    "description": "In this update to the Sentry documentation, the OTLP (OpenTelemetry Protocol) section has been reorganized for better clarity. An example collector configuration for both traces and logs has been added, making it easier for users to set up their systems. Additionally, Android and Flutter SDKs have been included in the traceparent section, enhancing support for these platforms. This update streamlines the documentation and provides practical examples for users implementing OTLP in their projects.",
     "url": "https://github.com/getsentry/sentry-docs/commit/693f809baa21171545b6bc82d7665d7f3ed49937",
     "publishedAt": "2025-10-03T19:55:55Z",
     "source": "docs",
@@ -227,6 +227,6 @@
         "docs/concepts/otlp/index.mdx"
       ]
     },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/concepts/otlp/index.mdx"
+    "aiSummary": "In this update to the Sentry documentation, the OTLP (OpenTelemetry Protocol) section has been reorganized for better clarity. An example collector configuration for both traces and logs has been added, making it easier for users to set up their systems. Additionally, Android and Flutter SDKs have been included in the traceparent section, enhancing support for these platforms. This update streamlines the documentation and provides practical examples for users implementing OTLP in their projects."
   }
 ]
