@@ -75,6 +75,11 @@ jobs:
             if [ "$DOC_FILES" -gt 0 ]; then
               echo "  📚 Found $DOC_FILES documentation files changed"
               
+              # Debug: Show first 4 chars of webhook secret for verification
+              echo "  🔑 Webhook secret starts with: ${WEBHOOK_SECRET:0:4}..."
+              WEBHOOK_SECRET="${{ secrets.WEBHOOK_SECRET }}"
+              echo "  🔑 Secret first 4 chars: ${WEBHOOK_SECRET:0:4}... (length: ${#WEBHOOK_SECRET})"
+              
               # Create a GitHub-compatible push payload
               WEBHOOK_PAYLOAD=$(echo "$COMMIT_DETAILS" | jq -c '{
                 ref: "refs/heads/master",

@@ -41,13 +41,15 @@ export async function POST(request: NextRequest) {
 
     // Verify webhook signature
     const providedSignature = signature.replace('sha256=', '');
-    const expectedSignature = createHmac('sha256', process.env.GITHUB_WEBHOOK_SECRET || '')
+    const webhookSecret = process.env.GITHUB_WEBHOOK_SECRET || '';
+    const expectedSignature = createHmac('sha256', webhookSecret)
       .update(body)
       .digest('hex');
     
     console.log('Provided signature:', providedSignature);
     console.log('Expected signature:', expectedSignature);
-    console.log('Webhook secret length:', (process.env.GITHUB_WEBHOOK_SECRET || '').length);
+    console.log('Webhook secret (first 4 chars):', webhookSecret.substring(0, 4) + '...');
+    console.log('Webhook secret length:', webhookSecret.length);
     
     if (expectedSignature !== providedSignature) {
       console.error('Invalid signature');
