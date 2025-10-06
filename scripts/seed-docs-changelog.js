@@ -3,6 +3,7 @@
 /**
  * One-time script to seed the docs changelog with the last 10 commits
  * from getsentry/sentry-docs that contain documentation changes
+ * with AI-generated summaries
  */
 
 const https = require('https');
@@ -17,6 +18,7 @@ const MAX_COMMITS = 10;
 
 // GitHub token is optional but recommended to avoid rate limits
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN || '';
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY || '';
 
 function httpsGet(url) {
   return new Promise((resolve, reject) => {
@@ -42,6 +44,41 @@ function httpsGet(url) {
         }
       });
     }).on('error', reject);
+  });
+}
+
+function httpsPost(url, data, headers = {}) {
+  return new Promise((resolve, reject) => {
+    const urlObj = new URL(url);
+    const postData = JSON.stringify(data);
+    
+    const options = {
+      hostname: urlObj.hostname,
+      port: 443,
+      path: urlObj.pathname,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData),
+        ...headers
+      }
+    };
+
+    const req = https.request(options, (res) => {
+      let responseData = '';
+      res.on('data', (chunk) => responseData += chunk);
+      res.on('end', () => {
+        if (res.statusCode === 200) {
+          resolve(JSON.parse(responseData));
+        } else {
+          reject(new Error(`HTTP ${res.statusCode}: ${responseData}`));
+        }
+      });
+    });
+
+    req.on('error', reject);
+    req.write(postData);
+    req.end();
   });
 }
 
@@ -80,7 +117,7 @@ function getDocumentationFiles(commit) {
   });
 }
 
-function generateSummary(commit, docFiles) {
+function generateBasicSummary(commit, docFiles) {
   const fileList = docFiles.map(f => f.filename).join(', ');
   const addedCount = docFiles.filter(f => f.status === 'added').length;
   const modifiedCount = docFiles.filter(f => f.status === 'modified').length;
@@ -102,11 +139,78 @@ function generateSummary(commit, docFiles) {
   return summary;
 }
 
-function createChangelogEntry(commit, docFiles) {
+async function generateAISummary(commit, docFiles) {
+  if (!OPENAI_API_KEY) {
+    console.log('   ℹ️  OpenAI API key not configured, using basic summary');
+    return generateBasicSummary(commit, docFiles);
+  }
+
+  try {
+    console.log('   🤖 Generating AI summary...');
+    
+    const fileChanges = docFiles.map(file => ({
+      filename: file.filename,
+      status: file.status,
+      additions: file.additions || 0,
+      deletions: file.deletions || 0,
+      changes: file.changes || 0,
+    }));
+
+    const prompt = `Analyze these documentation changes from the Sentry docs repository and provide a brief, user-friendly summary (2-3 sentences max):
+
+Commit Message: ${commit.commit.message}
+Files Changed: ${fileChanges.length}
+Author: ${commit.commit.author.name}
+
+File Details:
+${fileChanges.map(f => `- ${f.filename} (${f.status}): +${f.additions} -${f.deletions} lines`).join('\n')}
+
+Please provide a concise summary focusing on what documentation was updated and why it might be important to users.`;
+
+    const response = await httpsPost(
+      'https://api.openai.com/v1/chat/completions',
+      {
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: "You are a technical writer who creates clear, concise summaries of documentation changes. Focus on user impact and key improvements."
+          },
+          {
+            role: "user",
+            content: prompt
+          }
+        ],
+        max_tokens: 200,
+        temperature: 0.3,
+      },
+      {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`
+      }
+    );
+
+    const aiSummary = response.choices[0]?.message?.content;
+    if (aiSummary) {
+      console.log('   ✅ AI summary generated');
+      return aiSummary;
+    } else {
+      console.log('   ⚠️  No AI response, using basic summary');
+      return generateBasicSummary(commit, docFiles);
+    }
+
+  } catch (error) {
+    console.log(`   ⚠️  AI summary failed: ${error.message}, using basic summary`);
+    return generateBasicSummary(commit, docFiles);
+  }
+}
+
+async function createChangelogEntry(commit, docFiles) {
+  const aiSummary = await generateAISummary(commit, docFiles);
+  
   return {
     id: `docs-${commit.sha}`,
     title: `Docs Update: ${commit.commit.message.split('\n')[0]}`,
-    description: generateSummary(commit, docFiles),
+    description: aiSummary,
     url: commit.html_url,
     publishedAt: commit.commit.author.date,
     source: 'docs',
@@ -118,13 +222,20 @@ function createChangelogEntry(commit, docFiles) {
       removed: docFiles.filter(f => f.status === 'removed').map(f => f.filename),
       modified: docFiles.filter(f => f.status === 'modified').map(f => f.filename),
     },
-    aiSummary: generateSummary(commit, docFiles),
+    aiSummary: aiSummary,
   };
 }
 
 async function main() {
   try {
     console.log('🚀 Starting docs changelog seed script...\n');
+
+    if (OPENAI_API_KEY) {
+      console.log('✅ OpenAI API key detected - AI summaries enabled');
+    } else {
+      console.log('ℹ️  OpenAI API key not found - using basic summaries');
+      console.log('   Set OPENAI_API_KEY environment variable to enable AI summaries\n');
+    }
 
     // Fetch recent commits
     const commits = await getRecentCommits();
@@ -155,11 +266,16 @@ async function main() {
 
     console.log(`\n📊 Found ${docsCommits.length} commits with documentation changes\n`);
 
-    // Create changelog entries
-    const entries = docsCommits.map(commit => {
+    // Create changelog entries with AI summaries
+    const entries = [];
+    for (const commit of docsCommits) {
       const docFiles = getDocumentationFiles(commit);
-      return createChangelogEntry(commit, docFiles);
-    });
+      const entry = await createChangelogEntry(commit, docFiles);
+      entries.push(entry);
+      
+      // Rate limit for OpenAI API
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
 
     // Save to file
     const dataDir = path.join(process.cwd(), 'data');
@@ -173,13 +289,14 @@ async function main() {
     // Write the file
     fs.writeFileSync(changelogFile, JSON.stringify(entries, null, 2), 'utf8');
 
-    console.log('✅ Successfully saved changelog entries to data/docs-changelog.json\n');
+    console.log('\n✅ Successfully saved changelog entries to data/docs-changelog.json\n');
     console.log('📋 Summary:');
     entries.forEach((entry, i) => {
       console.log(`   ${i + 1}. ${entry.title}`);
       console.log(`      Author: ${entry.author}`);
       console.log(`      Date: ${new Date(entry.publishedAt).toLocaleDateString()}`);
       console.log(`      Files: ${entry.filesChanged.added.length + entry.filesChanged.modified.length + entry.filesChanged.removed.length}`);
+      console.log(`      Summary: ${entry.aiSummary.substring(0, 100)}...`);
       console.log('');
     });
 

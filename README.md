@@ -6,7 +6,9 @@ A retro 8-bit video game styled content aggregator that brings together the late
 
 - **🎥 YouTube Integration** - Real-time videos from Sentry's official channel
 - **📝 Blog Aggregation** - Latest posts from blog.sentry.io
-- **📚 Documentation Monitoring** - New pages from docs.sentry.io
+- **📚 Documentation Monitoring** - Track documentation changes with AI-powered summaries
+- **🤖 AI Summaries** - ChatGPT generates user-friendly summaries of docs updates (optional)
+- **📊 Analytics** - Vercel Analytics tracks visitor metrics and popular content
 - **🎮 Retro Gaming UI** - 8-bit pixel art aesthetic with neon colors
 - **🔍 Content Filtering** - Filter by source type (All, Blog, YouTube, Docs) and category (Gaming, Mobile, Web, Technical, Business)
 - **📱 Responsive Design** - Works on all devices
@@ -42,14 +44,20 @@ A retro 8-bit video game styled content aggregator that brings together the late
 4. **Create .env.local**
    ```bash
    echo "YOUTUBE_API_KEY=your_actual_api_key_here" > .env.local
+   # Optional: Add OPENAI_API_KEY for AI-powered doc summaries
    ```
 
-5. **Run the development server**
+5. **Seed the docs changelog**
+   ```bash
+   npm run seed-docs
+   ```
+
+6. **Run the development server**
    ```bash
    npm run dev
    ```
 
-6. **Open your browser** to `http://localhost:3000`
+7. **Open your browser** to `http://localhost:3000`
 
 ## 🔧 Configuration
 
@@ -65,7 +73,20 @@ A retro 8-bit video game styled content aggregator that brings together the late
 
 - **Blog**: Automatically fetches from `https://blog.sentry.io/feed.xml`
 - **YouTube**: Uses your API key to fetch from Sentry's official channel
-- **Documentation**: Monitors `https://docs.sentry.io` for new pages
+- **Documentation**: Tracks commit history from `getsentry/sentry-docs` with optional AI summaries
+
+### AI-Powered Doc Summaries (Optional)
+
+Enable ChatGPT to generate user-friendly summaries of documentation changes:
+
+1. Get an OpenAI API key from [OpenAI Platform](https://platform.openai.com/api-keys)
+2. Add to `.env.local`:
+   ```bash
+   OPENAI_API_KEY=sk-your-actual-api-key-here
+   ```
+3. Run `npm run seed-docs` to generate summaries
+
+See [AI_SUMMARIES.md](./AI_SUMMARIES.md) for detailed setup instructions and examples.
 
 ## 🏷️ Content Categories
 
