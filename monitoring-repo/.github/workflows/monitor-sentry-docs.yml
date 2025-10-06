@@ -86,15 +86,18 @@ jobs:
                 }
               }')
               
+              # Save payload to file for consistent signature calculation
+              echo -n "$WEBHOOK_PAYLOAD" > /tmp/webhook_payload.json
+              
               # Calculate signature (hex format, not base64)
-              SIGNATURE="sha256=$(echo -n "$WEBHOOK_PAYLOAD" | openssl dgst -sha256 -hmac "${{ secrets.WEBHOOK_SECRET }}" | cut -d' ' -f2)"
+              SIGNATURE="sha256=$(cat /tmp/webhook_payload.json | openssl dgst -sha256 -hmac "${{ secrets.WEBHOOK_SECRET }}" | awk '{print $2}')"
               
               # Trigger your application's webhook
               curl -X POST "${{ secrets.WEBHOOK_URL }}" \
                 -H "Content-Type: application/json" \
                 -H "X-GitHub-Event: push" \
                 -H "X-Hub-Signature-256: $SIGNATURE" \
-                -d "$WEBHOOK_PAYLOAD" \
+                -d "@/tmp/webhook_payload.json" \
                 --fail-with-body
               
               if [ $? -eq 0 ]; then
