@@ -1,232 +1,233 @@
 [
   {
-    "id": "docs-b8323f64836885ae9e7d723fcc9da3cf2df1d424",
-    "title": "Docs Update: Clarify deletion options for Error Issues (#15143)",
-    "description": "Added support for deleting platform issues in Sentry, clarifying deletion options for Error Issues in index.mdx file.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/b8323f64836885ae9e7d723fcc9da3cf2df1d424",
-    "publishedAt": "2025-10-06T15:13:36Z",
+    "id": "docs-2ddbe02f590b25b44e6da9d2e6ef2233d189755d",
+    "title": "Docs Update: Update short source map includes (#15046)",
+    "description": "Updated short source map includes to provide missing details like a platform link to source maps docs and additional information on code discrepancies.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/2ddbe02f590b25b44e6da9d2e6ef2233d189755d",
+    "publishedAt": "2025-10-07T20:58:21Z",
     "source": "docs",
     "categories": [
       "technical",
       "documentation"
     ],
-    "commitId": "b8323f64836885ae9e7d723fcc9da3cf2df1d424",
-    "author": "Armen Zambrano G.",
+    "commitId": "2ddbe02f590b25b44e6da9d2e6ef2233d189755d",
+    "author": "Shannon Anahata",
     "filesChanged": {
       "added": [],
       "removed": [],
       "modified": [
-        "docs/product/issues/states-triage/index.mdx"
+        "docs/platforms/javascript/guides/cloudflare/index.mdx",
+        "platform-includes/getting-started-sourcemaps-short-version/javascript.cloudflare.mdx",
+        "platform-includes/getting-started-sourcemaps-short-version/javascript.mdx"
       ]
     },
-    "aiSummary": "Added support for deleting platform issues in Sentry, clarifying deletion options for Error Issues in index.mdx file."
+    "aiSummary": "Updated short source map includes to provide missing details like a platform link to source maps docs and additional information on code discrepancies."
   },
   {
-    "id": "docs-6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
-    "title": "Docs Update: docs(self-hosted): reference architectures (#13893)",
-    "description": "Documentation changes in 3 file(s), 3 added. Files: develop-docs/self-hosted/reference-architecture/index.mdx, develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx, develop-docs/self-hosted/reference-architecture/simple-single-box.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
-    "publishedAt": "2025-10-06T14:49:14Z",
+    "id": "docs-ed47cde817036e245a388961aeb08eb423cdee5d",
+    "title": "Docs Update: Web vitals refresh (#15100)",
+    "description": "PR #15100 updated and refreshed the copy for Web Vitals in the Sentry documentation.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/ed47cde817036e245a388961aeb08eb423cdee5d",
+    "publishedAt": "2025-10-07T20:47:48Z",
     "source": "docs",
     "categories": [
       "technical",
       "documentation"
     ],
-    "commitId": "6599647cd590e2a941f1e9dd04ed22b1b4560b4d",
+    "commitId": "ed47cde817036e245a388961aeb08eb423cdee5d",
+    "author": "Alex Krawiec",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/product/insights/frontend/web-vitals/index.mdx",
+        "docs/product/insights/overview/filters-display/widgets.mdx"
+      ]
+    },
+    "aiSummary": "PR #15100 updated and refreshed the copy for Web Vitals in the Sentry documentation."
+  },
+  {
+    "id": "docs-751e9e7fbf373189710b4a628741515346657f2e",
+    "title": "Docs Update: Update replay page to clarify LIVE indicator for replays (#15105)",
+    "description": "Updated replay page to clarify LIVE indicator for in-progress replays, adding documentation for LIVE replays.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/751e9e7fbf373189710b4a628741515346657f2e",
+    "publishedAt": "2025-10-07T20:18:51Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "751e9e7fbf373189710b4a628741515346657f2e",
+    "author": "jerry",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/product/explore/session-replay/replay-page-and-filters.mdx"
+      ]
+    },
+    "aiSummary": "Updated replay page to clarify LIVE indicator for in-progress replays, adding documentation for LIVE replays."
+  },
+  {
+    "id": "docs-3a4f398ba400d66c7282f17734db640996aab6c1",
+    "title": "Docs Update: fix(chartcuterie): Update yarn -> pnpm (#15148)",
+    "description": "Switched from using `yarn` to `pnpm` in Chartcuterie docs and fixed a typo.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/3a4f398ba400d66c7282f17734db640996aab6c1",
+    "publishedAt": "2025-10-07T16:37:11Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "3a4f398ba400d66c7282f17734db640996aab6c1",
+    "author": "Colleen O'Rourke",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "develop-docs/services/chartcuterie.mdx"
+      ]
+    },
+    "aiSummary": "Switched from using `yarn` to `pnpm` in Chartcuterie docs and fixed a typo."
+  },
+  {
+    "id": "docs-9355a3e7b9fe4867b0544eaf1d69635142245835",
+    "title": "Docs Update: docs(self-hosted): provide guide for scaling up taskbroker and taskworker (#15136)",
+    "description": "Added guide for scaling up taskbroker and taskworker in Sentry self-hosted documentation.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/9355a3e7b9fe4867b0544eaf1d69635142245835",
+    "publishedAt": "2025-10-07T15:11:17Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "9355a3e7b9fe4867b0544eaf1d69635142245835",
     "author": "Reinaldy Rafli",
     "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "develop-docs/self-hosted/tasks.mdx"
+      ]
+    },
+    "aiSummary": "Added guide for scaling up taskbroker and taskworker in Sentry self-hosted documentation."
+  },
+  {
+    "id": "docs-89bc33e7ae0fc2db13ffcdc978a8b23dbf5c00d9",
+    "title": "Docs Update: fix(docs) fixes formatting, updates platformLink (#15082)",
+    "description": "Fixed formatting and updated platformLink in Sentry docs to correct typos, expand Deno SDK support, and improve AI integration documentation for JavaScript.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/89bc33e7ae0fc2db13ffcdc978a8b23dbf5c00d9",
+    "publishedAt": "2025-10-07T13:38:19Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "89bc33e7ae0fc2db13ffcdc978a8b23dbf5c00d9",
+    "author": "Sergiy Dybskiy",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/javascript/common/configuration/integrations/vercelai.mdx",
+        "docs/platforms/javascript/common/tracing/instrumentation/ai-agents-module.mdx"
+      ]
+    },
+    "aiSummary": "Fixed formatting and updated platformLink in Sentry docs to correct typos, expand Deno SDK support, and improve AI integration documentation for JavaScript."
+  },
+  {
+    "id": "docs-06b3d7af5e2e704ecce0bec7192041ff2a93d13b",
+    "title": "Docs Update: fix(apple): Clarify prewarmed app starts (#15110)",
+    "description": "Clarified prewarmed app start tracing in Sentry by addressing dropped spans and improving reliability of measuring app starts.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/06b3d7af5e2e704ecce0bec7192041ff2a93d13b",
+    "publishedAt": "2025-10-07T12:59:25Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "06b3d7af5e2e704ecce0bec7192041ff2a93d13b",
+    "author": "Philipp Hofmann",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/apple/common/tracing/instrumentation/automatic-instrumentation.mdx"
+      ]
+    },
+    "aiSummary": "Clarified prewarmed app start tracing in Sentry by addressing dropped spans and improving reliability of measuring app starts."
+  },
+  {
+    "id": "docs-454a04fb2ba9687474e64c3aaa97aa7eeccb1d8a",
+    "title": "Docs Update: ref(rust): clarify logs defaults in new release (#15036)",
+    "description": "Clarified default logging behavior in Rust for new release.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/454a04fb2ba9687474e64c3aaa97aa7eeccb1d8a",
+    "publishedAt": "2025-10-07T12:24:39Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "454a04fb2ba9687474e64c3aaa97aa7eeccb1d8a",
+    "author": "Lorenzo Cian",
+    "filesChanged": {
+      "added": [],
+      "removed": [],
+      "modified": [
+        "docs/platforms/rust/common/logs/index.mdx",
+        "docs/platforms/rust/guides/tracing/index.mdx"
+      ]
+    },
+    "aiSummary": "Clarified default logging behavior in Rust for new release."
+  },
+  {
+    "id": "docs-e9d32722801c19aca23ba14edf975df808954b99",
+    "title": "Docs Update: docs(js): Update Remix on Cloudflare quick start guide (#14873)",
+    "description": "Updated Remix on Cloudflare quick start guide to use shared include for consistency with other frameworks on Cloudflare.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/e9d32722801c19aca23ba14edf975df808954b99",
+    "publishedAt": "2025-10-07T09:01:33Z",
+    "source": "docs",
+    "categories": [
+      "technical",
+      "documentation"
+    ],
+    "commitId": "e9d32722801c19aca23ba14edf975df808954b99",
+    "author": "Sarah Mischinger",
+    "filesChanged": {
       "added": [
-        "develop-docs/self-hosted/reference-architecture/index.mdx",
-        "develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx",
-        "develop-docs/self-hosted/reference-architecture/simple-single-box.mdx"
+        "platform-includes/getting-started-complete/javascript.remix.mdx"
       ],
       "removed": [],
-      "modified": []
+      "modified": [
+        "docs/platforms/javascript/guides/cloudflare/frameworks/hydrogen-remix.mdx",
+        "docs/platforms/javascript/guides/cloudflare/frameworks/nuxt.mdx",
+        "docs/platforms/javascript/guides/cloudflare/frameworks/remix.mdx",
+        "docs/platforms/javascript/guides/remix/manual-setup.mdx"
+      ]
     },
-    "aiSummary": "Documentation changes in 3 file(s), 3 added. Files: develop-docs/self-hosted/reference-architecture/index.mdx, develop-docs/self-hosted/reference-architecture/separate-ingest-box.mdx, develop-docs/self-hosted/reference-architecture/simple-single-box.mdx"
+    "aiSummary": "Updated Remix on Cloudflare quick start guide to use shared include for consistency with other frameworks on Cloudflare."
   },
   {
-    "id": "docs-306f612da19e247cf2512d37083be2ff18447575",
-    "title": "Docs Update: Update noProxy list in index.mdx (#15122)",
-    "description": "Added pgbouncer and seaweedfs to the noProxy list in index.mdx in version 25.9.0 for Sentry.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/306f612da19e247cf2512d37083be2ff18447575",
-    "publishedAt": "2025-10-06T14:40:05Z",
+    "id": "docs-044f7a3b9575d5fc0874ad48077d4d8655085a77",
+    "title": "Docs Update: docs(self-hosted): detailed gaming/console support limitations for self-hosted (#15134)",
+    "description": "Added detailed gaming/console support limitations for self-hosted Sentry instances, addressing issue #3891.",
+    "url": "https://github.com/getsentry/sentry-docs/commit/044f7a3b9575d5fc0874ad48077d4d8655085a77",
+    "publishedAt": "2025-10-06T21:24:50Z",
     "source": "docs",
     "categories": [
       "technical",
       "documentation"
     ],
-    "commitId": "306f612da19e247cf2512d37083be2ff18447575",
-    "author": "Wouter Claeys",
+    "commitId": "044f7a3b9575d5fc0874ad48077d4d8655085a77",
+    "author": "Reinaldy Rafli",
     "filesChanged": {
       "added": [],
       "removed": [],
       "modified": [
-        "develop-docs/self-hosted/index.mdx"
+        "develop-docs/self-hosted/index.mdx",
+        "docs/platforms/playstation/index.mdx"
       ]
     },
-    "aiSummary": "Added pgbouncer and seaweedfs to the noProxy list in index.mdx in version 25.9.0 for Sentry."
-  },
-  {
-    "id": "docs-f2bd60cd564ff0246203c9aff75a8837e6a41e30",
-    "title": "Docs Update: docs: Remove generic references from Go (#15079)",
-    "description": "Removed generic and plural references to SDKs in the Go SDK docs for clarity and specificity.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/f2bd60cd564ff0246203c9aff75a8837e6a41e30",
-    "publishedAt": "2025-10-06T13:56:13Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "f2bd60cd564ff0246203c9aff75a8837e6a41e30",
-    "author": "Alex Alderman Webb",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/go/common/configuration/draining.mdx",
-        "docs/platforms/go/common/configuration/filtering.mdx",
-        "docs/platforms/go/common/configuration/sampling.mdx",
-        "docs/platforms/go/common/data-management/sensitive-data/index.mdx",
-        "docs/platforms/go/common/enriching-events/breadcrumbs/index.mdx",
-        "docs/platforms/go/common/enriching-events/context/index.mdx",
-        "docs/platforms/go/common/enriching-events/identify-user/index.mdx",
-        "docs/platforms/go/common/enriching-events/scopes/index.mdx",
-        "docs/platforms/go/common/usage/sdk-fingerprinting/index.mdx"
-      ]
-    },
-    "aiSummary": "Removed generic and plural references to SDKs in the Go SDK docs for clarity and specificity."
-  },
-  {
-    "id": "docs-98576424985863006572cfce18099b26b5c60acc",
-    "title": "Docs Update: feat(python): Document trace_ignore_status_codes option (#15096)",
-    "description": "Added documentation for the `trace_ignore_status_codes` option in Python to the Sentry docs.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/98576424985863006572cfce18099b26b5c60acc",
-    "publishedAt": "2025-10-06T11:51:28Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "98576424985863006572cfce18099b26b5c60acc",
-    "author": "Alex Alderman Webb",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/python/configuration/options.mdx"
-      ]
-    },
-    "aiSummary": "Added documentation for the `trace_ignore_status_codes` option in Python to the Sentry docs."
-  },
-  {
-    "id": "docs-eac5c3b92d6c30867cea39326cbe03119c0c7018",
-    "title": "Docs Update: RN: Fix Configure Automatic Source Maps Upload script for RN 0.81.1 (#15140)",
-    "description": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/manual-setup.mdx",
-    "url": "https://github.com/getsentry/sentry-docs/commit/eac5c3b92d6c30867cea39326cbe03119c0c7018",
-    "publishedAt": "2025-10-06T11:02:41Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "eac5c3b92d6c30867cea39326cbe03119c0c7018",
-    "author": "Antonis Lilis",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/react-native/manual-setup/manual-setup.mdx"
-      ]
-    },
-    "aiSummary": "Documentation changes in 1 file(s), 1 modified. Files: docs/platforms/react-native/manual-setup/manual-setup.mdx"
-  },
-  {
-    "id": "docs-3ff6cea7fc4896261e9cb17180e6931cb4345782",
-    "title": "Docs Update: RN: Update Codepush instructions to use a separate dir for sourcemaps (#15141)",
-    "description": "Updated Codepush instructions in Sentry to use a separate directory for sourcemaps to prevent their inclusion in releases, addressing issue #5148.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/3ff6cea7fc4896261e9cb17180e6931cb4345782",
-    "publishedAt": "2025-10-06T11:02:07Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "3ff6cea7fc4896261e9cb17180e6931cb4345782",
-    "author": "Antonis Lilis",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/react-native/sourcemaps/uploading/codepush.mdx"
-      ]
-    },
-    "aiSummary": "Updated Codepush instructions in Sentry to use a separate directory for sourcemaps to prevent their inclusion in releases, addressing issue #5148."
-  },
-  {
-    "id": "docs-1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
-    "title": "Docs Update: fix(pii-scrubbing): Fix up sentence structure (#15125)",
-    "description": "Fixed sentence structure in PII scrubbing to improve clarity and readability in index.mdx file.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
-    "publishedAt": "2025-10-06T06:52:58Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "1eacd442f1e28c5b4e0c8e2f9afbeebf3c54c619",
-    "author": "Tobias Wilfert",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/security-legal-pii/scrubbing/server-side-scrubbing/index.mdx"
-      ]
-    },
-    "aiSummary": "Fixed sentence structure in PII scrubbing to improve clarity and readability in index.mdx file."
-  },
-  {
-    "id": "docs-9cc716082b2076e29f7d1d809446a540940a7e4f",
-    "title": "Docs Update: Documented backpressure handling option for .NET (#15106)",
-    "description": "Added documentation for backpressure handling option in .NET to address performance issues, enhancing Sentry's error monitoring capabilities.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/9cc716082b2076e29f7d1d809446a540940a7e4f",
-    "publishedAt": "2025-10-05T23:57:10Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "9cc716082b2076e29f7d1d809446a540940a7e4f",
-    "author": "James Crosswell",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/platforms/dotnet/common/configuration/options.mdx"
-      ]
-    },
-    "aiSummary": "Added documentation for backpressure handling option in .NET to address performance issues, enhancing Sentry's error monitoring capabilities."
-  },
-  {
-    "id": "docs-693f809baa21171545b6bc82d7665d7f3ed49937",
-    "title": "Docs Update: feat: Add example collector config to otlp docs + extra cleanup (#15128)",
-    "description": "OTLP docs updated with re-organized sections, example collector config for traces/logs, and added Android/Flutter SDKs to traceparent section while removing backend JS platforms.",
-    "url": "https://github.com/getsentry/sentry-docs/commit/693f809baa21171545b6bc82d7665d7f3ed49937",
-    "publishedAt": "2025-10-03T19:55:55Z",
-    "source": "docs",
-    "categories": [
-      "technical",
-      "documentation"
-    ],
-    "commitId": "693f809baa21171545b6bc82d7665d7f3ed49937",
-    "author": "Abhijeet Prasad",
-    "filesChanged": {
-      "added": [],
-      "removed": [],
-      "modified": [
-        "docs/concepts/otlp/index.mdx"
-      ]
-    },
-    "aiSummary": "OTLP docs updated with re-organized sections, example collector config for traces/logs, and added Android/Flutter SDKs to traceparent section while removing backend JS platforms."
+    "aiSummary": "Added detailed gaming/console support limitations for self-hosted Sentry instances, addressing issue #3891."
   }
 ]
