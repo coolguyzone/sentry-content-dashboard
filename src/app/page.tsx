@@ -44,14 +44,6 @@ interface ContentItem {
   categories: string[];
 }
 
-interface DocsPage {
-  title: string;
-  description: string;
-  url: string;
-  lastModified: string;
-  source: 'docs';
-}
-
 export default function Home() {
   const [content, setContent] = useState<ContentItem[]>([]);
   const [loading, setLoading] = useState(true);

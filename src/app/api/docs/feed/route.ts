@@ -2,11 +2,21 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
+interface ChangelogEntry {
+  id: string;
+  title: string;
+  description?: string;
+  aiSummary?: string;
+  url: string;
+  publishedAt: string;
+  author: string;
+}
+
 export async function GET() {
   try {
     // Load changelog
     const changelogFile = path.join(process.cwd(), 'data', 'docs-changelog.json');
-    const changelog = JSON.parse(fs.readFileSync(changelogFile, 'utf8'));
+    const changelog: ChangelogEntry[] = JSON.parse(fs.readFileSync(changelogFile, 'utf8'));
 
     // Generate RSS feed
     const rss = `<?xml version="1.0" encoding="UTF-8"?>
@@ -16,7 +26,7 @@ export async function GET() {
     <link>https://docs.sentry.io/changelog</link>
     <description>Recent updates to Sentry documentation</description>
     <atom:link href="https://sentry-content-dashboard.sentry.dev/api/docs/feed" rel="self" type="application/rss+xml"/>
-    ${changelog.map((entry: any) => `
+    ${changelog.map((entry) => `
     <item>
       <title>${escapeXml(entry.title)}</title>
       <link>${escapeXml(entry.url)}</link>
