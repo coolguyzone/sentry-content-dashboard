@@ -30,7 +30,7 @@ export async function GET() {
     <item>
       <title>${escapeXml(entry.title)}</title>
       <link>${escapeXml(entry.url)}</link>
-      <description>${escapeXml(entry.description || entry.aiSummary)}</description>
+      <description>${escapeXml(entry.description || entry.aiSummary || 'No description available')}</description>
       <pubDate>${new Date(entry.publishedAt).toUTCString()}</pubDate>
       <guid>${entry.url}</guid>
       <author>${escapeXml(entry.author)}</author>
