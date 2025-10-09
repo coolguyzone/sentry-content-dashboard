@@ -24,6 +24,7 @@ const CHANGELOG_FILE = path.join(process.cwd(), 'data', 'docs-changelog.json');
 const KV_KEY = 'docs-changelog';
 
 // Lazy load Redis client
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 let redisClient: any = null;
 
 async function getRedisClient() {
