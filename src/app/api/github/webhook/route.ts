@@ -89,6 +89,11 @@ export async function POST(request: NextRequest) {
         // Process each commit
         for (const rawCommit of payload.commits) {
           try {
+            // Debug: log the raw commit structure
+            console.log('Raw commit keys:', Object.keys(rawCommit).join(', '));
+            console.log('Raw commit.sha:', rawCommit.sha);
+            console.log('Raw commit.id:', rawCommit.id);
+            
             // Normalize commit structure (GitHub API returns different formats)
             const commit = {
               id: rawCommit.sha || rawCommit.id || '',
@@ -104,7 +109,13 @@ export async function POST(request: NextRequest) {
               modified: rawCommit.modified || [],
             };
             
-            console.log(`Processing commit: ${commit.id} - ${commit.message.substring(0, 50)}`);
+            console.log(`Normalized commit: ${commit.id} - ${commit.message.substring(0, 50)}`);
+            
+            if (!commit.id) {
+              console.error('Commit ID is empty after normalization, skipping');
+              continue;
+            }
+            
             const { processDocsChanges } = await import('../../../../utils/githubProcessor');
             await processDocsChanges(commit);
             console.log(`Successfully processed commit: ${commit.id}`);
