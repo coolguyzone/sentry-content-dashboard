@@ -1,22 +1,20 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { getChangelogEntries } from '../../../../utils/changelogStorage';
 
 interface ChangelogEntry {
-  id: string;
-  title: string;
-  description?: string;
   aiSummary?: string;
-  url: string;
-  publishedAt: string;
   author: string;
+  description?: string;
+  id: string;
+  publishedAt: string;
+  title: string;
+  url: string;
 }
 
 export async function GET() {
   try {
-    // Load changelog
-    const changelogFile = path.join(process.cwd(), 'data', 'docs-changelog.json');
-    const changelog: ChangelogEntry[] = JSON.parse(fs.readFileSync(changelogFile, 'utf8'));
+    // Load changelog from storage
+    const changelog: ChangelogEntry[] = await getChangelogEntries();
 
     // Generate RSS feed
     const rss = `<?xml version="1.0" encoding="UTF-8"?>

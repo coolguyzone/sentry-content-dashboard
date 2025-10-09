@@ -1,6 +1,4 @@
-import { writeFile, readFile, mkdir } from 'fs/promises';
-import { existsSync } from 'fs';
-import path from 'path';
+import { saveChangelogEntry as saveToStorage } from './changelogStorage';
 
 // Lazy imports to handle missing dependencies
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -79,7 +77,6 @@ interface ChangelogEntry {
   aiSummary: string;
 }
 
-const CHANGELOG_FILE = path.join(process.cwd(), 'data', 'docs-changelog.json');
 
 export async function processDocsChanges(commit: Commit): Promise<void> {
   try {
@@ -139,8 +136,8 @@ export async function processDocsChanges(commit: Commit): Promise<void> {
       aiSummary,
     };
 
-    // Save to changelog file
-    await saveChangelogEntry(changelogEntry);
+    // Save to storage (Vercel KV in production, file in development)
+    await saveToStorage(changelogEntry);
 
     console.log(`Successfully processed commit ${commit.id}`);
 
@@ -197,48 +194,3 @@ Keep it brief, clear, and actionable.`;
   }
 }
 
-async function saveChangelogEntry(entry: ChangelogEntry): Promise<void> {
-  try {
-    // Ensure data directory exists
-    const dataDir = path.dirname(CHANGELOG_FILE);
-    if (!existsSync(dataDir)) {
-      await mkdir(dataDir, { recursive: true });
-    }
-
-    // Load existing changelog entries
-    let existingEntries: ChangelogEntry[] = [];
-    if (existsSync(CHANGELOG_FILE)) {
-      const fileContent = await readFile(CHANGELOG_FILE, 'utf-8');
-      existingEntries = JSON.parse(fileContent);
-    }
-
-    // Add new entry at the beginning (most recent first)
-    existingEntries.unshift(entry);
-
-    // Keep only the last 100 entries to prevent file from growing too large
-    const limitedEntries = existingEntries.slice(0, 100);
-
-    // Save back to file
-    await writeFile(CHANGELOG_FILE, JSON.stringify(limitedEntries, null, 2));
-
-    console.log(`Saved changelog entry for commit ${entry.commitId}`);
-
-  } catch (error) {
-    console.error('Error saving changelog entry:', error);
-  }
-}
-
-export async function getDocsChangelog(): Promise<ChangelogEntry[]> {
-  try {
-    if (!existsSync(CHANGELOG_FILE)) {
-      return [];
-    }
-
-    const fileContent = await readFile(CHANGELOG_FILE, 'utf-8');
-    return JSON.parse(fileContent);
-
-  } catch (error) {
-    console.error('Error loading docs changelog:', error);
-    return [];
-  }
-}

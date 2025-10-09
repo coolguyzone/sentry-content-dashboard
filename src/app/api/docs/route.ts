@@ -102,35 +102,30 @@ async function fetchStaticDocs(): Promise<DocsPage[]> {
   }
 }
 
-  async function fetchDocsChangelog(): Promise<DocsChangelogEntry[]> {
-    try {
-      // For now, just load from local file since GitHub integration has module resolution issues
-      const changelogFile = path.join(process.cwd(), 'data', 'docs-changelog.json');
-      if (fs.existsSync(changelogFile)) {
-        const changelogData = JSON.parse(fs.readFileSync(changelogFile, 'utf8'));
-        const transformedEntries: DocsChangelogEntry[] = changelogData.map((entry: DocsChangelogEntry) => ({
-          id: entry.id,
-          title: entry.title,
-          description: entry.description,
-          url: entry.url,
-          publishedAt: entry.publishedAt,
-          source: 'docs' as const,
-          categories: entry.categories,
-          commitId: entry.commitId,
-          author: entry.author,
-          filesChanged: entry.filesChanged,
-          aiSummary: entry.aiSummary,
-          lastModified: entry.publishedAt
-        }));
+async function fetchDocsChangelog(): Promise<DocsChangelogEntry[]> {
+  try {
+    const { getChangelogEntries } = await import('../../../utils/changelogStorage');
+    const changelogData = await getChangelogEntries();
+    
+    const transformedEntries: DocsChangelogEntry[] = changelogData.map((entry) => ({
+      aiSummary: entry.aiSummary,
+      author: entry.author,
+      categories: entry.categories,
+      commitId: entry.commitId,
+      description: entry.description,
+      filesChanged: entry.filesChanged,
+      id: entry.id,
+      lastModified: entry.publishedAt,
+      publishedAt: entry.publishedAt,
+      source: 'docs' as const,
+      title: entry.title,
+      url: entry.url,
+    }));
 
-        console.log('Docs changelog entries loaded from file:', transformedEntries.length);
-        return transformedEntries;
-      }
-
-      console.log('No docs changelog file found');
-      return [];
-    } catch (error) {
-      console.log('Error loading docs changelog:', error);
-      return [];
-    }
+    console.log('Docs changelog entries loaded from storage:', transformedEntries.length);
+    return transformedEntries;
+  } catch (error) {
+    console.log('Error loading docs changelog:', error);
+    return [];
   }
+}
