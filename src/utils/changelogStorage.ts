@@ -127,6 +127,10 @@ export async function getChangelogEntries(): Promise<ChangelogEntry[]> {
  * Check if we're running in production (Vercel)
  */
 function isProduction(): boolean {
-  return process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production' && process.env.VERCEL === '1';
+  const isVercel = !!process.env.VERCEL;
+  const isProd = process.env.VERCEL_ENV === 'production' || process.env.NODE_ENV === 'production';
+  const result = isVercel && isProd;
+  console.log('isProduction check:', {isVercel, isProd, result, VERCEL_ENV: process.env.VERCEL_ENV, NODE_ENV: process.env.NODE_ENV});
+  return result;
 }
 

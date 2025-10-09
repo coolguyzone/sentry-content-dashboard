@@ -4,17 +4,31 @@ import { createHmac } from 'crypto';
 interface GitHubWebhookPayload {
   ref: string;
   commits: Array<{
-    id: string;
-    message: string;
-    timestamp: string;
-    url: string;
-    author: {
-      name: string;
-      email: string;
+    id?: string;
+    sha?: string;
+    commit?: {
+      message?: string;
+      author?: {
+        date?: string;
+        name?: string;
+        email?: string;
+      };
     };
-    added: string[];
-    removed: string[];
-    modified: string[];
+    message?: string;
+    timestamp?: string;
+    url?: string;
+    html_url?: string;
+    author?: {
+      name?: string;
+      email?: string;
+    };
+    added?: string[];
+    removed?: string[];
+    modified?: string[];
+    files?: Array<{
+      filename: string;
+      status: string;
+    }>;
   }>;
   repository: {
     name: string;
@@ -73,12 +87,30 @@ export async function POST(request: NextRequest) {
     console.log(`Processing ${payload.commits.length} commits from sentry-docs`);
 
         // Process each commit
-        for (const commit of payload.commits) {
+        for (const rawCommit of payload.commits) {
           try {
+            // Normalize commit structure (GitHub API returns different formats)
+            const commit = {
+              id: rawCommit.sha || rawCommit.id || '',
+              message: rawCommit.commit?.message || rawCommit.message || '',
+              timestamp: rawCommit.commit?.author?.date || rawCommit.timestamp || new Date().toISOString(),
+              url: rawCommit.html_url || rawCommit.url || '',
+              author: {
+                name: rawCommit.commit?.author?.name || rawCommit.author?.name || 'Unknown',
+                email: rawCommit.commit?.author?.email || rawCommit.author?.email || '',
+              },
+              added: rawCommit.added || [],
+              removed: rawCommit.removed || [],
+              modified: rawCommit.modified || [],
+            };
+            
+            console.log(`Processing commit: ${commit.id} - ${commit.message.substring(0, 50)}`);
             const { processDocsChanges } = await import('../../../../utils/githubProcessor');
             await processDocsChanges(commit);
+            console.log(`Successfully processed commit: ${commit.id}`);
           } catch (error) {
-            console.error('GitHub processor not available:', error);
+            console.error(`Error processing commit:`, error);
+            console.error('Error details:', error instanceof Error ? error.message : 'Unknown error');
             // Continue without processing - webhook still succeeds
           }
         }

@@ -95,6 +95,15 @@ export async function processDocsChanges(commit: Commit): Promise<void> {
       ref: commit.id,
     });
 
+    const totalFiles = commitDetails.data.files?.length || 0;
+    console.log(`Commit has ${totalFiles} total files changed`);
+    
+    // Log some file names for debugging
+    if (totalFiles > 0 && commitDetails.data.files) {
+      const sampleFiles = commitDetails.data.files.slice(0, 3).map((f: {filename: string}) => f.filename);
+      console.log(`Sample files: ${sampleFiles.join(', ')}`);
+    }
+
     // Filter for documentation files only
     const docFiles = commitDetails.data.files?.filter((file: { filename: string }) => 
       file.filename.endsWith('.md') || 
@@ -103,6 +112,8 @@ export async function processDocsChanges(commit: Commit): Promise<void> {
       file.filename.includes('/documentation/')
     ) || [];
 
+    console.log(`Found ${docFiles.length} documentation files`);
+    
     if (docFiles.length === 0) {
       console.log('No documentation files changed in this commit');
       return;
