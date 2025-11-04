@@ -51,6 +51,7 @@ export default function Home() {
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'blog' | 'youtube' | 'docs' | 'changelog'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   
   // Swirling animation for desktop header
   const isSwirling = useSwirlingAnimation(2500);
@@ -122,12 +123,27 @@ export default function Home() {
       filtered = filtered.filter(item => item.categories.includes(selectedCategory));
     }
     
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(item => 
+        item.title.toLowerCase().includes(query) ||
+        item.description.toLowerCase().includes(query) ||
+        (item.author && item.author.toLowerCase().includes(query)) ||
+        item.categories.some(catId => {
+          const category = getCategoryById(catId);
+          return category && category.name.toLowerCase().includes(query);
+        })
+      );
+    }
+    
     return filtered;
   };
 
   const resetFilters = () => {
     setSelectedFilter('all');
     setSelectedCategory('all');
+    setSearchQuery('');
     setIsMobileMenuOpen(false);
   };
 
@@ -263,6 +279,41 @@ export default function Home() {
           </div>
         </div>
       </header>
+
+      {/* Search Bar */}
+      <div className="bg-retro-card/70 backdrop-blur-sm border-b-2 border-cyan-400/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
+          <div className="relative max-w-2xl mx-auto">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="SEARCH ARTICLES, VIDEOS, DOCS..."
+                className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-retro-bg text-cyan-400 placeholder-cyan-700 border-2 border-cyan-400 rounded-lg font-['VT323'] text-sm sm:text-lg focus:outline-none focus:border-green-400 focus:ring-2 focus:ring-green-400/50 transition-all duration-200"
+              />
+              <div className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                <svg className="w-5 sm:w-6 h-5 sm:h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+            </div>
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute -right-2 sm:right-0 top-1/2 -translate-y-1/2 translate-x-full ml-2 sm:ml-3 retro-button px-2 sm:px-3 py-2 sm:py-3 font-['Press_Start_2P'] text-xs bg-red-600 text-white hover:bg-red-500 transition-colors"
+              >
+                ✕
+              </button>
+            )}
+          </div>
+          {searchQuery && (
+            <div className="text-center mt-3 text-cyan-400 font-['VT323'] text-sm sm:text-base">
+              Searching for: <span className="text-green-400 font-bold">&quot;{searchQuery}&quot;</span>
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* Filter Controls */}
       <div className="bg-retro-card/50 border-b-2 border-green-400">
@@ -473,13 +524,18 @@ export default function Home() {
       </div>
 
       {/* Filter Summary */}
-      {(selectedFilter !== 'all' || selectedCategory !== 'all') && (
+      {(selectedFilter !== 'all' || selectedCategory !== 'all' || searchQuery) && (
         <div className="bg-retro-card/30 border-b border-green-400/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
             <div className="text-center">
               <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-cyan-400 font-['VT323'] text-xs sm:text-sm">
                 <span>FILTERING:</span>
                 <div className="flex flex-wrap justify-center gap-2">
+                  {searchQuery && (
+                    <span className="inline-block px-2 py-1 bg-cyan-600 text-white text-xs rounded font-['Press_Start_2P']">
+                      SEARCH: {searchQuery.toUpperCase()}
+                    </span>
+                  )}
                   {selectedFilter !== 'all' && (
                     <span className="inline-block px-2 py-1 bg-blue-600 text-white text-xs rounded font-['Press_Start_2P']">
                       {selectedFilter.toUpperCase()}
