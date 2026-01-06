@@ -11,6 +11,10 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  experimental: {
+    // Disable automatic instrumentation to prevent OpenTelemetry conflicts
+    instrumentationHook: false,
+  },
 };
 
 export default nextConfig;
